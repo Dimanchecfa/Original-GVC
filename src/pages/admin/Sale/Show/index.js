@@ -1,11 +1,18 @@
-import React from 'react';
+import React from 'react'
+import { useNavigate } from 'react-router-dom';
 
-export const ShowMotors = () => {
+const ShowSell = () => {
+    const navigate = useNavigate();
     return (
         <>
             <div className="row">
                 <div class="col-md-4 offset-md-1 col-xl-3">
-                    <button type="button" class="btn btn-danger btn-block mb-3">
+                    <button type="button" class="btn btn-danger btn-block mb-3"  onClick={
+                        () => {
+                            navigate(-1);
+                        }
+
+                    }>
                         <i class="align-middle me-2" data-feather="plus"></i>Retour
                     </button>
                     <div class="card mb-3">
@@ -32,7 +39,7 @@ export const ShowMotors = () => {
 
                         <div class="card-header">
 
-                            <h4 class="card-title mb-0">Detail de la moto N MMM44444M4M4M4M4M</h4>
+                            <h4 class="card-title mb-0">Detail de la vente de Mr BIKIENGA ZAKARIA le 10/10/2022</h4>
                         </div>
                         <table class="table table-hover my-0">
                             <thead>
@@ -66,7 +73,7 @@ export const ShowMotors = () => {
 
                         <div class="card-header">
 
-                            <h4 class="card-title mb-0">Detail de la moto N MMM44444M4M4M4M4M</h4>
+                            <h4 class="card-title mb-0">Detail de la vente de Mr BIKIENGA ZAKARIA le 10/10/2022</h4>
                         </div>
                         <table class="table table-hover my-0">
                             <thead>
@@ -96,7 +103,9 @@ export const ShowMotors = () => {
                     </div>
                 </div>
             </div>
+        
         </>
-    );
-};
+    )
+}
 
+export default ShowSell;

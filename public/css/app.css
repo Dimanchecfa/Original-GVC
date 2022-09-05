@@ -2298,7 +2298,7 @@ progress {
 }
 
 .form-label {
-    margin-bottom: .5rem
+    margin-bottom: .2rem
 }
 
 .col-form-label {
@@ -2561,7 +2561,7 @@ textarea.form-control-lg {
     font-size: .875rem;
     font-weight: 400;
     line-height: 1.5;
-    padding: .3rem 2.55rem .3rem .85rem;
+    padding: .2rem 2rem .3rem .85rem;
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
     width: 100%
 }
@@ -4770,7 +4770,7 @@ fieldset:disabled .btn {
 }
 
 .card {
-    --bs-card-spacer-y: 1.25rem;
+    --bs-card-spacer-y: 0.5rem;
     --bs-card-spacer-x: 1.25rem;
     --bs-card-title-spacer-y: 0.5rem;
     --bs-card-border-width: 0;
@@ -13339,17 +13339,17 @@ screen and (-ms-high-contrast:active) {
 
 .sidebar {
     direction: ltr;
-    max-width: 50px;
-    min-width: 50px;
-    transition:  0.9s;
+    max-width: 40px;
+    min-width: 40px;
+    transition:  1.5s;
     /* top: 50px; */
 }
 .sidebar li a span {
     display: none;
   }
 .sidebar:hover {
-    max-width: 200px;
-    min-width: 200px;
+ 
+    min-width: 160px;
     justify-content: start;
 }
 .sidebar:hover li a span {
@@ -13363,11 +13363,6 @@ screen and (-ms-high-contrast:active) {
   }
 
   
-    .sidebare li a {
-      display: flex;
-      align-items: center;
-      justify-content: start;
-    }
 
 .sidebar,
 .sidebar-content {
@@ -13465,14 +13460,12 @@ a.sidebar-link svg {
     width: 26px
 }
 
-.sidebar.collapsed {
-    margin-left: -260px
-}
+
 
 @media(min-width:1px)and (max-width:991.98px) {
-    .sidebar {
+    /* .sidebar {
         margin-left: -260px
-    }
+    } */
 
     .sidebar.collapsed {
         margin-left: 0

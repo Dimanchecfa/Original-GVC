@@ -1,6 +1,8 @@
-import { EyeIcon } from "../../../components/icones";
+import { useNavigate } from "react-router-dom";
+import { EditIcon, EyeIcon } from "../../../components/icones";
 
 const Dashboard = () => {
+	const navigate = useNavigate();
 	return (
 		<>
 			<div className="row">
@@ -55,7 +57,7 @@ const Dashboard = () => {
 
 				</div>
 			</div>
-			<div class="col-11 offset-1 col-xxl-9 d-flex">
+			<div class="col-11 offset-2 col-xxl-9 d-flex">
 				<div class="card flex-fill">
 					<div class="card-header">
 
@@ -65,8 +67,9 @@ const Dashboard = () => {
 						<thead>
 							<tr>
 								<th>Nom du client</th>
-								<th class="">N du client</th>
+								
 								<th class="">Marque</th>
+								<th class="">Nom du commerciale</th>
 								<th class="">Heure</th>
 								<th class="">Montant Paye</th>
 								<th class="">Action</th>
@@ -82,7 +85,20 @@ const Dashboard = () => {
 								<td><span class="badge bg-success">Done</span></td>
 								<td class="d-none d-md-table-cell">Vanessa Tucker</td>
 								<td class="d-none d-md-table-cell">
-								<button class="btn btn-secondary btn-sm"> <EyeIcon/>{" "}Details</button>
+								<button class="btn btn-secondary btn-sm"
+									onClick={
+										() => {
+											navigate('/show_sale')
+									}
+									}
+								> <EyeIcon/>{" "}Details</button>{" "}
+								<button class="btn btn-primary btn-sm"
+								onClick={
+									() => {
+										navigate('/edit_sale')
+								}
+								}
+								> <EditIcon/>{" "}Modifier</button>
 								</td>
 							
 							</tr>
@@ -95,22 +111,28 @@ const Dashboard = () => {
 								<td><span class="badge bg-success">Done</span></td>
 								<td class="d-none d-md-table-cell">Sharon Lessman</td>
 								<td class="d-none d-md-table-cell">
-								<button class="btn btn-secondary btn-sm"> <EyeIcon/>{" "}Details</button>
+								<button class="btn btn-secondary btn-sm"
+								onClick={
+									() => {
+										navigate('/show_sale')
+								}
+								}
+								> <EyeIcon/>{" "}Details</button>{" "}
+								<button class="btn btn-primary btn-sm"
+								onClick={
+									() => {
+										navigate('/edit_sale')
+								}
+								}
+								> <EditIcon/>{" "}Modifier</button>
 								</td>
 							</tr>
 							
-							<tr>
-								<td>Project Wombat</td>
-								<td class="d-none d-md-table-cell">01/01/2021</td>
-								<td class="d-none d-md-table-cell">31/06/2021</td>
-								<td><span class="badge bg-warning">In progress</span></td>
-								<td class="d-none d-md-table-cell">William Harris</td>
-								<td class="d-none d-md-table-cell">
-								<button class="btn btn-secondary btn-sm"> <EyeIcon />{" "}Details</button>
-								</td>
-
-							</tr>
+							
 						</tbody>
+						<tfoot>
+							
+						</tfoot>
 					</table>
 				</div>
 			</div>

@@ -3,8 +3,16 @@ import { EditIcon, EyeIcon } from "../../../../components/icones";
 export const ShowStock = () => {
     return ( 
         <>
-                    <div class="col-11 offset-1 col-xxl-9 d-flex ">
+			<div className="row">
+				<div class="col-4 offset-1 mb-5">
+					<button class="btn btn-danger">Retour</button>
+				</div>
+			</div>
+                    <div class="col-11 offset-1 col-xxl-10 d-flex ">
+							
+
 							<div class="card flex-fill">
+							
 
 								<div class="card-header">
 
