@@ -1,0 +1,36 @@
+
+.sidebare {
+  position: fixed;
+    top: 50px;
+  justify-content: start;
+  bottom: 0;
+  background-color: rgb(0, 110, 255) !important;
+  width: 200px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  transition:  0.4s ease-in-out;
+ 
+
+}
+/* .sidebare:hover  {
+  width: 200px;
+}
+.sidebare li a span {
+  display: none;
+}
+.sidebare  a span {
+    display: none;
+  }
+.sidebare:hover li a span {
+    display: block;
+  }
+  .sidebare:hover a span {
+    display: block ;
+  } */
+
+  .sidebare li a {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+  }
+
