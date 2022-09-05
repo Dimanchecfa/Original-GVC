@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { BackButton } from "../../../../components/button";
 
 const AddStock = () => {
     const [isAddMotor, setIsAddMotor] = useState(false);
     return (
         <>
+            <BackButton />
             {
                 !isAddMotor && (
                     <>

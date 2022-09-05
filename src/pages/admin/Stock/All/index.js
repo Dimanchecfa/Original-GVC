@@ -1,16 +1,18 @@
+
+import { useNavigate } from "react-router-dom";
 import { EyeIcon } from "../../../../components/icones";
+import PageHeader from "../../../../components/pageheader";
 
 const AllStock = () => {
+	const navigate = useNavigate();
     return ( 
         <>
-            
-				<div class="col-md-2 offset-md-11 mb-5">
-					<button type="button" class="btn btn-secondary">Add Stock</button>
-				</div>
+				
+				<PageHeader title="Listes des Stock" route= "/add_stock" />
 				
 
 			
-            <div class="col-11 offset-1 col-xxl-9 d-flex ">
+            <div class="col-11 offset-1 col-xxl-10 d-flex ">
 							<div class="card flex-fill">
 
 								<div class="card-header">
@@ -59,56 +61,7 @@ const AllStock = () => {
 												<button type="button" class="btn btn-secondary"> <EyeIcon/>Detail</button>
 											</td>
 										</tr>
-										<tr>
-											<td>Project Nitro</td>
-											<td class="d-none d-md-table-cell">01/01/2021</td>
-											<td class="d-none d-md-table-cell">31/06/2021</td>
-											<td><span class="badge bg-warning">In progress</span></td>
-											<td class="d-none d-md-table-cell">Vanessa Tucker</td>
-											<td class="d-none d-md-table-cell">
-												<button type="button" class="btn btn-secondary"> <EyeIcon/>Detail</button>
-											</td>
-										</tr>
-										<tr>
-											<td>Project Phoenix</td>
-											<td class="d-none d-md-table-cell">01/01/2021</td>
-											<td class="d-none d-md-table-cell">31/06/2021</td>
-											<td><span class="badge bg-success">Done</span></td>
-											<td class="d-none d-md-table-cell">William Harris</td>
-											<td class="d-none d-md-table-cell">
-												<button type="button" class="btn btn-secondary"> <EyeIcon/>Detail</button>
-											</td>
-										</tr>
-										<tr>
-											<td>Project X</td>
-											<td class="d-none d-md-table-cell">01/01/2021</td>
-											<td class="d-none d-md-table-cell">31/06/2021</td>
-											<td><span class="badge bg-success">Done</span></td>
-											<td class="d-none d-md-table-cell">Sharon Lessman</td>
-											<td class="d-none d-md-table-cell">
-												<button type="button" class="btn btn-secondary"> <EyeIcon/>Detail</button>
-											</td>
-										</tr>
-										<tr>
-											<td>Project Romeo</td>
-											<td class="d-none d-md-table-cell">01/01/2021</td>
-											<td class="d-none d-md-table-cell">31/06/2021</td>
-											<td><span class="badge bg-success">Done</span></td>
-											<td class="d-none d-md-table-cell">Christina Mason</td>
-											<td class="d-none d-md-table-cell">
-												<button type="button" class="btn btn-secondary"> <EyeIcon/>Detail</button>
-											</td>
-										</tr>
-										<tr>
-											<td>Project Wombat</td>
-											<td class="d-none d-md-table-cell">01/01/2021</td>
-											<td class="d-none d-md-table-cell">31/06/2021</td>
-											<td><span class="badge bg-warning">In progress</span></td>
-											<td class="d-none d-md-table-cell">William Harris</td>
-											<td class="d-none d-md-table-cell">
-												<button type="button" class="btn btn-secondary"> <EyeIcon/>Detail</button>
-											</td>
-										</tr>
+									
 									</tbody>
 								</table>
 							</div>
