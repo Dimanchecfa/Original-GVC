@@ -101,7 +101,7 @@ const AllSell = () => {
 							</tr>
 							
 							<tr>
-								<td>Project Wombat</td>
+								<td>Project</td>
 								<td class="d-none d-md-table-cell">01/01/2021</td>
 								<td class="d-none d-md-table-cell">31/06/2021</td>
 								<td><span class="badge bg-warning">In progress</span></td>
