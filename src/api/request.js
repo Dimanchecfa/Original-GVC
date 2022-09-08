@@ -3,18 +3,21 @@ import { handlingErrors, HTTP_CLIENT } from "./client";
 
 
 
-export const getAllStock = () => {
-    new Promise ((resolve, reject) => {
-        HTTP_CLIENT.get("/stock")
+export const  getAllStock = (page) => {
+    new Promise((resolve, reject) => {
+        HTTP_CLIENT.get(`/stock/page/${page}`)
             .then((response) => {
                 resolve(response.data);
             })
             .catch((error) => {
-                const message = handlingErrors(error);
-                reject(message);
+                reject(handlingErrors(error));
             });
     });
 };
+
+
+
+
 export const getStock = (id) => {
     new Promise ((resolve, reject) => {
         HTTP_CLIENT.get(`/stock/${id}`)
@@ -196,9 +199,9 @@ export const deleteModel = (id) => {
     });
 };
 
-export const getAllMoto = () => {
+export const getAllMoto = (page) => {
     new Promise ((resolve, reject) => {
-        HTTP_CLIENT.get("/moto")
+        HTTP_CLIENT.get(`/moto/page/${page}`)
             .then((response) => {
                 resolve(response.data);
             })
@@ -207,6 +210,7 @@ export const getAllMoto = () => {
                 reject(message);
             });
     });
+    
 };
 
 export const getMoto = (numero_serie) => {
@@ -261,9 +265,9 @@ export const deleteMoto = (numero_serie) => {
     });
 };
 
-export const getAllVente = () => {
+export const getAllVente = (page) => {
     new Promise ((resolve, reject) => {
-        HTTP_CLIENT.get("/vente")
+        HTTP_CLIENT.get(`/vente/page/${page}`)
             .then((response) => {
                 resolve(response.data);
             })
@@ -434,7 +438,6 @@ export const getSellByDate = (date) => {
             
     })
 }
-
 export const getSellMotoNumberByDate = (date) => {
     new Promise ((resolve , reject) => {
         HTTP_CLIENT.get(`history/${date}/moto`)
@@ -449,7 +452,6 @@ export const getSellMotoNumberByDate = (date) => {
             
     })
 }
-
 export const getLastMonthSell = () => {
     new Promise ((resolve , reject) => {
         HTTP_CLIENT.get("history/lastmonth")
@@ -464,7 +466,6 @@ export const getLastMonthSell = () => {
             
     })
 }
-
 export const getLastMonthSellPrice = () => {
     new Promise ((resolve , reject) => {
         HTTP_CLIENT.get("history/lastmonth/price")
@@ -476,8 +477,7 @@ export const getLastMonthSellPrice = () => {
                 reject(message);
             })
 
-            
-    })
+        })
 }
 
 export const getLastMonthSellMotonumber = () => {
@@ -527,7 +527,7 @@ export const getSellNumberByDate = (date) => {
 
 export const getCurrentMonthSell = () => {
     new Promise ((resolve , reject) => {
-        HTTP_CLIENT.get("history/currentmonth/sell")
+        HTTP_CLIENT.get("history/currentmonth/sell_moto")
             .then((response) => {
                 resolve(response.data);
             })
@@ -570,19 +570,18 @@ export const getCurrentMonthSellMotoNumber = () => {
     })
 }
 
-export const getMotoByStock = (numero_stock) => {
+export const getMotoByStock = (page , numero_stock) => {
     new Promise ((resolve , reject) => {
-        HTTP_CLIENT.get(`moto/stock/${numero_stock}`)
+        HTTP_CLIENT.get(`moto/${page}/${numero_stock}`)
             .then((response) => {
                 resolve(response.data);
             })
             .catch((error) => {
                 const message = handlingErrors(error);
                 reject(message);
-            })
-
-            
+            })           
     })
+   
 }
 
 export const getMotoByMarque = (marque) => {

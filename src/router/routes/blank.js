@@ -7,8 +7,7 @@ const BlankRoutes = () => {
         <>
             <Routes>
                 <Route element={<BlankLayout />}>
-                    <Route path="/" element={<Login />} />
-                    <Route path="/register" element={<div>Register</div>} />
+                   
                 </Route>
             </Routes>
         </>

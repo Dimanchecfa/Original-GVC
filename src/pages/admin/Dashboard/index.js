@@ -3,6 +3,7 @@ import { EditIcon, EyeIcon } from "../../../components/icones";
 
 const Dashboard = () => {
 	const navigate = useNavigate();
+	
 	return (
 		<>
 			<div className="row">

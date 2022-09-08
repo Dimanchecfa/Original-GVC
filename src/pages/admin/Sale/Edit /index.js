@@ -97,9 +97,7 @@ const EditSale = () => {
           <div class="card-body offset-8 mt-5">
            <button type="button" class="btn btn-primary btn-lg">Modifier</button>
           </div>
-         
-         
-          <hr class="my-3"></hr>
+         <hr class="my-3"></hr>
           
         </div>
       </div>

@@ -1,4 +1,5 @@
 import { Outlet } from "react-router-dom";
+import AuthGuard from "../../router/components/AuthGuard";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 
@@ -8,7 +9,9 @@ const AdminLayout = () => {
         <>
         <div className="App">
         <div class="wrapper">
-          <Sidebar />
+          <AuthGuard>
+            <Sidebar />
+          </AuthGuard>
           <div class="main">
             <Navbar />
             <main class="content">
