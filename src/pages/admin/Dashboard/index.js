@@ -1,9 +1,103 @@
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { EditIcon, EyeIcon } from "../../../components/icones";
+import  { getAllVente, } from "../../../api/request";
+import { Axios } from 'axios';
+import { HTTP_CLIENT } from '../../../api/client';
+import PaginationPage from "../../../components/paginate";
 
 const Dashboard = () => {
 	const navigate = useNavigate();
+	const [moto , setMoto] = useState([]);
+	const [price , setPrice] = useState([]);
+	const [vente , setVente] = useState([]);
+	const [currentPage , setCurrentPage] = useState(0);
+	const [totalPage , setTotalPage] = useState(0);
+	const [isLoading , setIsLoading] = useState(true);
 	
+//obtenir l ' heure a partir de la date 2002-02-02T00:00:00.000Z
+	
+	
+		
+
+
+
+	useEffect(() => {
+		(async () => fetchMoto())();
+		(async () => fetchPrice())();
+		(async () => fetchTodayVente(0))();
+		const getHour = (date) => {
+			const d = '2002-02-02T10:00:00.000000Z'
+			//obtenir heure et minute
+			const hour = d.slice(11, 16);
+			return hour;
+		}
+		
+		
+	}, []);
+
+	const fetchMoto = async () => {
+		await HTTP_CLIENT.get("http://localhost:8000/api/dashboard_moto")
+		    .then((response) => {
+					setMoto(response.data);
+					
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+	}
+
+	const fetchPrice = async () => {
+		 await HTTP_CLIENT.get("http://localhost:8000/api/dashboard_price")
+				.then((response) => {
+					setPrice(response.data);
+					
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+	}
+	const fetchTodayVente = async (page) => {
+		await HTTP_CLIENT.get(`http://localhost:8000/api/vente/today/${page + 1}`)
+				.then((response) => {
+					const ventes = response.data;
+					
+					
+
+					
+					if(ventes?.data?.data?.length > 0){
+						setCurrentPage(ventes.data.current_page);
+						setTotalPage(ventes.data.last_page);
+						setVente(ventes.data.data);
+						console.log(vente);
+						setIsLoading(false);
+						
+						
+					}
+					setIsLoading(false);
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+	}
+
+
+
+	
+
+	
+
+
+	   
+
+
+	
+	
+	
+			
+		
+	
+
 	return (
 		<>
 			<div className="row">
@@ -21,7 +115,7 @@ const Dashboard = () => {
 									</div>
 								</div>
 							</div>
-							<h1 class="mt-1 mb-3 text-center">7</h1>
+							<h1 class="mt-1 mb-3 text-center">{moto?.data}</h1>
 							<div class="mb-0">
 								<span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i></span>
 								<span class="text-muted">
@@ -46,7 +140,7 @@ const Dashboard = () => {
 									</div>
 								</div>
 							</div>
-							<h1 class="mt-1 mb-3">2.382.2222</h1>
+							<h1 class="mt-1 mb-3">{ price?.data}</h1>
 							<div class="mb-0">
 								<span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i> </span>
 								<span class="text-muted">
@@ -67,29 +161,30 @@ const Dashboard = () => {
 					<table class="table table-hover my-0">
 						<thead>
 							<tr>
-								<th>Nom du client</th>
+								<th class="text-center">Nom du client</th>
 								
-								<th class="">Marque</th>
-								<th class="">Nom du commerciale</th>
-								<th class="">Heure</th>
-								<th class="">Montant Paye</th>
-								<th class="">Action</th>
+								<th class="text-center">Marque</th>
+								<th class="text-center">Nom du commerciale</th>
+								<th class="text-center">Montant Paye</th>
+								<th class="text-center">Action</th>
 
 								
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>Project Apollo</td>
-								<td class="d-none d-md-table-cell">01/01/2021</td>
-								<td class="d-none d-md-table-cell">31/06/2021</td>
-								<td><span class="badge bg-success">Done</span></td>
-								<td class="d-none d-md-table-cell">Vanessa Tucker</td>
-								<td class="d-none d-md-table-cell">
+							{
+								vente.map((vente , index) => (
+									<tr key={index}>
+								<td class="text-center">{ vente?.nom_client}</td>
+								<td class="d-none d-md-table-cell text-center">{ vente?.marque}</td>
+								<td class="d-none d-md-table-cell text-center "> {  vente?.pseudo_commerciale}</td>
+								<td class="d-none d-md-table-cell text-center">{ vente?.montant_verse}{" "} FCFA</td>
+								<td class="d-none d-md-table-cell text-center">
 								<button class="btn btn-secondary btn-sm"
 									onClick={
 										() => {
-											navigate('/show_sale')
+											navigate('/show_sale'  , {state : vente})
+											
 									}
 									}
 								> <EyeIcon/>{" "}Details</button>{" "}
@@ -102,39 +197,51 @@ const Dashboard = () => {
 								> <EditIcon/>{" "}Modifier</button>
 								</td>
 							
-							</tr>
+							</tr>))
+							}
+							{ 
+							isLoading ? (
+								<tr>
+									<td colSpan="6" className="text-center">
+										...Veuillez patienter
+									</td>
+								</tr>
+							): null
+							}
+							{
+								!isLoading && vente.length === 0 ? (
+									<tr>
+										<td colSpan="6" className="text-center">
+											Aucune vente pour le moment
+										</td>
+									</tr>
+								): null
+							}
 						
-							
-							<tr>
-								<td>Project X</td>
-								<td class="d-none d-md-table-cell">01/01/2021</td>
-								<td class="d-none d-md-table-cell">31/06/2021</td>
-								<td><span class="badge bg-success">Done</span></td>
-								<td class="d-none d-md-table-cell">Sharon Lessman</td>
-								<td class="d-none d-md-table-cell">
-								<button class="btn btn-secondary btn-sm"
-								onClick={
-									() => {
-										navigate('/show_sale')
-								}
-								}
-								> <EyeIcon/>{" "}Details</button>{" "}
-								<button class="btn btn-primary btn-sm"
-								onClick={
-									() => {
-										navigate('/edit_sale')
-								}
-								}
-								> <EditIcon/>{" "}Modifier</button>
-								</td>
-							</tr>
 							
 							
 						</tbody>
-						<tfoot>
+						
 							
-						</tfoot>
+									
+								
+						
 					</table>
+					{/* {
+										!isLoading && vente.length > 0 ? (
+											<PaginationPage
+												currentPage={currentPage}
+												totalPage={totalPage}
+												isLoading={isLoading}
+												onPageChange={ async (page) => {
+													await HTTP_CLIENT.get(`/vente?page=${page?.selected ?? 0 + 1}`)  }
+													
+												}
+											
+
+											/>
+										): null
+									} */}
 				</div>
 			</div>
 		</>

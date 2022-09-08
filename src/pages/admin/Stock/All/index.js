@@ -1,10 +1,32 @@
 
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { EyeIcon } from "../../../../components/icones";
+import { HTTP_CLIENT } from "../../../../api/client";
+import { EditIcon, EyeIcon } from "../../../../components/icones";
 import PageHeader from "../../../../components/pageheader";
 
 const AllStock = () => {
 	const navigate = useNavigate();
+	const [isLoading, setIsLoading] = useState(true);
+	const [stock, setStock] = useState([]);
+
+	useEffect(() => {
+		(async () => fetchStock())();
+	}, []);
+
+	const fetchStock = async () => {
+		await HTTP_CLIENT.get("http://localhost:8000/api/stock")
+			.then((response) => {
+				const { data } = response.data;
+				setStock(data);
+				console.log(stock);
+				
+				setIsLoading(false);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	};
     return ( 
         <>
 				
@@ -20,50 +42,70 @@ const AllStock = () => {
 									<h4 class="card-title mb-0">Listes des stocks</h4>
 								</div>
 								<table class="table table-hover my-0">
-									<thead>
-										<tr>
-											<th>N du stock</th>
-											<th class="d-none d-md-table-cell">Nombre de moto</th>
-											<th class="d-none d-md-table-cell">Date de l'arrivage</th>
-											<th class="d-none d-md-table-cell">Nom du Fournisseur</th>
-											<th>N du fournisseur</th>
-											<th class="d-none d-md-table-cell">Action</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>Project Apollo</td>
-											<td class="d-none d-md-table-cell">01/01/2021</td>
-											<td class="d-none d-md-table-cell">31/06/2021</td>
-											<td><span class="badge bg-success">Done</span></td>
-											<td class="d-none d-md-table-cell">Vanessa Tucker</td>
-											<td class="d-none d-md-table-cell">
-												<button type="button" class="btn btn-secondary"> <EyeIcon/>Detail</button>
-											</td>
-										</tr>
-										<tr>
-											<td>Project Fireball</td>
-											<td class="d-none d-md-table-cell">01/01/2021</td>
-											<td class="d-none d-md-table-cell">31/06/2021</td>
-											<td><span class="badge bg-danger">Cancelled</span></td>
-											<td class="d-none d-md-table-cell">William Harris</td>
-											<td class="d-none d-md-table-cell">
-												<button type="button" class="btn btn-secondary"> <EyeIcon/>Detail</button>
-											</td>
-										</tr>
-										<tr>
-											<td>Project Hades</td>
-											<td class="d-none d-md-table-cell">01/01/2021</td>
-											<td class="d-none d-md-table-cell">31/06/2021</td>
-											<td><span class="badge bg-success">Done</span></td>
-											<td class="d-none d-md-table-cell">Sharon Lessman</td>
-											<td class="d-none d-md-table-cell">
-												<button type="button" class="btn btn-secondary"> <EyeIcon/>Detail</button>
-											</td>
-										</tr>
+						<thead>
+							<tr>
+								<th class="text-center">Numero du stock</th>
+								
+								<th class="text-center">Nombre de moto</th>
+								<th class="text-center">Date de l'arrivage</th>
+								<th class="text-center">Nom du fournisseur</th>
+								<th class="text-center">Numero du fournisseur</th>
+								<th class="text-center">Action</th>
+
+								
+							</tr>
+						</thead>
+						<tbody>
+							{
+								stock.map((stock , index) => (
+									<tr key={index}>
+								<td class="text-center">{ stock?.numero}</td>
+								<td class="d-none d-md-table-cell text-center">{ stock?.nombre_moto}</td>
+								<td class="d-none d-md-table-cell text-center "> 10-10-10</td>
+								<td class="d-none d-md-table-cell text-center">{ stock?.nom_fournisseur}</td>
+								<td class="d-none d-md-table-cell text-center">{ stock?.numero_fournisseur}</td>
+								<td class="d-none d-md-table-cell text-center">
+								<button class="btn btn-secondary btn-sm"
+									onClick={
+										() => {
+											navigate('/show_stock'  , {state : stock})
+											
+									}
+									}
+								> <EyeIcon/>{" "}Details</button>{" "}
+								
+								</td>
+							
+							</tr>))
+							}
+							{ 
+							isLoading ? (
+								<tr>
+									<td colSpan="6" className="text-center">
+										...Veuillez patienter
+									</td>
+								</tr>
+							): null
+							}
+							{
+								!isLoading && stock.length === 0 ? (
+									<tr>
+										<td colSpan="6" className="text-center">
+											Aucune stock pour le moment
+										</td>
+									</tr>
+								): null
+							}
+						
+							
+							
+						</tbody>
+						
+							
 									
-									</tbody>
-								</table>
+								
+						
+					</table>
 							</div>
 						</div>
         </>

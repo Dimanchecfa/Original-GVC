@@ -1,4 +1,5 @@
 import { handlingErrors, HTTP_CLIENT } from "./client";
+import { getToday } from './request';
 
 
 
@@ -269,7 +270,7 @@ export const getAllVente = (page) => {
     new Promise ((resolve, reject) => {
         HTTP_CLIENT.get(`/vente/page/${page}`)
             .then((response) => {
-                resolve(response.data);
+                resolve(response);
             })
             .catch((error) => {
                 const message = handlingErrors(error);
@@ -396,9 +397,11 @@ export const deleteCommerciale = (id) => {
 
 
 
+
+
 export const getTodaySellPrice = () => {
     new Promise((resolve, reject) => {
-        HTTP_CLIENT.get("dashboard/price")
+        HTTP_CLIENT.get("dashboard_price")
             .then((response) => {
                 resolve(response.data);
             })
@@ -410,19 +413,20 @@ export const getTodaySellPrice = () => {
 } );
 }   
 export const getTodaySellMoto = () => {
-    new Promise ((resolve , reject) => {
-        HTTP_CLIENT.get("dashboard/moto")
+    new Promise((resolve, reject) => {
+        HTTP_CLIENT.get("dashboard_moto")
             .then((response) => {
-                resolve(response.data);
-            })
+                
+                resolve(response);
+     })
             .catch((error) => {
                 const message = handlingErrors(error);
                 reject(message);
-            })
-
-            
-    })
+            });
+       
+})
 }
+
 
 export const getSellByDate = (date) => {
     new Promise ((resolve , reject) => {
@@ -456,7 +460,7 @@ export const getLastMonthSell = () => {
     new Promise ((resolve , reject) => {
         HTTP_CLIENT.get("history/lastmonth")
             .then((response) => {
-                resolve(response.data);
+                resolve(response);
             })
             .catch((error) => {
                 const message = handlingErrors(error);

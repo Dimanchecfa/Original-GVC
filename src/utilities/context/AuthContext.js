@@ -1,6 +1,6 @@
 import React, { createContext, useState } from "react";
 import HANDLER_STORAGE from "../../data";
-import { USER_SESSION } from "../constant/app.constant";
+import { USER_SESSION } from "../constants";
 
 const AuthContext = createContext(null);
 

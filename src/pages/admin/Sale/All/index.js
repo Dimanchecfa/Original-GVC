@@ -6,23 +6,61 @@ import { useState  } from 'react';
 import "react-datepicker/dist/react-datepicker.css";
 import PageHeader from '../../../../components/pageheader';
 import { useNavigate } from 'react-router-dom';
+import { HTTP_CLIENT } from '../../../../api/client';
+import { alertPending } from '../../../../components/notification';
 
 const AllSell = () => {
     //obtenir la date en jj/mm/aaaa
     const navigate = useNavigate();
     const [startDate, setStartDate] = useState(new Date());
+	const [isLoading, setIsLoading] = React.useState(true);
+	const dateFormat = (date) => {
+		const d = new Date(date);
+		let month = '' + (d.getMonth() + 1);
+		let day = '' + d.getDate();
+		const year = d.getFullYear();
+		//return 2022-02-02
+		if (month.length < 2) month = '0' + month;
+		if (day.length < 2) day = '0' + day;
+		return [year, month, day].join('-');
+	}
     useEffect(() => {
         const dateFormat = (date) => {
             const d = new Date(date);
             let month = '' + (d.getMonth() + 1);
             let day = '' + d.getDate();
             const year = d.getFullYear();
-            return [day, month, year].join('/');
+            //return 2022-02-02
+			if (month.length < 2) month = '0' + month;
+			if (day.length < 2) day = '0' + day;
+			return [year, month, day].join('-');
         }
         
       
        console.log(dateFormat(startDate));
+	   (async () => fetchVenteByDate(dateFormat(startDate)))();
     }, [ startDate ])
+	const [vente , setVente] = useState([]);
+	const date = dateFormat(startDate);
+	const fetchVenteByDate = async (date) => {
+		await HTTP_CLIENT.get(`http://localhost:8000/api/history/${dateFormat(startDate)}/sell`)
+			.then((response) => {
+				if(response.data.data.length == 0){
+					setVente([]);
+					setIsLoading(false);
+					
+				}
+				else{
+					setVente(response?.data?.data);
+					console.log(response.data);
+					setIsLoading(false);
+				}
+				setIsLoading(false);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	}
 
 
     return (
@@ -43,30 +81,34 @@ const AllSell = () => {
 					<table class="table table-hover my-0">
 						<thead>
 							<tr>
-								<th>Nom du client</th>
-								<th class="">N du client</th>
-								<th class="">Marque</th>
-								<th class="">Heure</th>
-								<th class="">Montant Paye</th>
-								<th class="">Action</th>
+								<th class="text-center">Nom du client</th>
+								
+								<th class="text-center">Marque</th>
+								<th class="text-center">Nom du commerciale</th>
+								<th class="text-center">Montant Paye</th>
+								<th class="text-center">Action</th>
 
 								
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>Project Apollo</td>
-								<td class="d-none d-md-table-cell">01/01/2021</td>
-								<td class="d-none d-md-table-cell">31/06/2021</td>
-								<td><span class="badge bg-success">Done</span></td>
-								<td class="d-none d-md-table-cell">Vanessa Tucker</td>
-								<td class="d-none d-md-table-cell">
-								<button class="btn btn-secondary btn-sm" onClick={
-                                    ()=> {
-                                        navigate("/show_sale")
-                                    }
-                                }> <EyeIcon/>{" "}Details</button>{" "}
-                                	<button class="btn btn-primary btn-sm"
+							{
+								vente.map((vente , index) => (
+									<tr key={index}>
+								<td class="text-center">{ vente?.nom_client}</td>
+								<td class="d-none d-md-table-cell text-center">{ vente?.marque}</td>
+								<td class="d-none d-md-table-cell text-center "> {  vente?.pseudo_commerciale}</td>
+								<td class="d-none d-md-table-cell text-center">{ vente?.montant_verse}{" "} FCFA</td>
+								<td class="d-none d-md-table-cell text-center">
+								<button class="btn btn-secondary btn-sm"
+									onClick={
+										() => {
+											navigate('/show_sale'  , {state : vente})
+											
+									}
+									}
+								> <EyeIcon/>{" "}Details</button>{" "}
+								<button class="btn btn-primary btn-sm"
 								onClick={
 									() => {
 										navigate('/edit_sale')
@@ -75,54 +117,35 @@ const AllSell = () => {
 								> <EditIcon/>{" "}Modifier</button>
 								</td>
 							
-							</tr>
+							</tr>))
+							}
+							{ 
+							isLoading ? (
+								<tr>
+									<td colSpan="6" className="text-center">
+										...Veuillez patienter
+									</td>
+								</tr>
+							): null
+							}
+							{
+								!isLoading && vente.length === 0 ? (
+									<tr>
+										<td colSpan="6" className="text-center">
+											Aucune vente pour le moment
+										</td>
+									</tr>
+								): null
+							}
 						
 							
-							<tr>
-								<td>Project X</td>
-								<td class="d-none d-md-table-cell">01/01/2021</td>
-								<td class="d-none d-md-table-cell">31/06/2021</td>
-								<td><span class="badge bg-success">Done</span></td>
-								<td class="d-none d-md-table-cell">Sharon Lessman</td>
-								<td class="d-none d-md-table-cell">
-								<button class="btn btn-secondary btn-sm" onClick={
-                                    ()=> {
-                                        navigate("/show_sale")
-                                    }
-                                }> <EyeIcon/>{" "}Details</button>{" "}
-                                	<button class="btn btn-primary btn-sm"
-								onClick={
-									() => {
-										navigate('/edit_sale')
-								}
-								}
-								> <EditIcon/>{" "}Modifier</button>
-								</td>
-							</tr>
 							
-							<tr>
-								<td>Project</td>
-								<td class="d-none d-md-table-cell">01/01/2021</td>
-								<td class="d-none d-md-table-cell">31/06/2021</td>
-								<td><span class="badge bg-warning">In progress</span></td>
-								<td class="d-none d-md-table-cell">William Harris</td>
-								<td class="d-none d-md-table-cell">
-								<button class="btn btn-secondary btn-sm" onClick={
-                                    ()=> {
-                                        navigate("/show_sale")
-                                    }
-                                }> <EyeIcon/>{" "}Details</button>{" "}
-                                	<button class="btn btn-primary btn-sm"
-								onClick={
-									() => {
-										navigate('/edit_sale')
-								}
-								}
-								> <EditIcon/>{" "}Modifier</button>
-								</td>
-
-							</tr>
 						</tbody>
+						
+							
+									
+								
+						
 					</table>
 				</div>
 			</div>

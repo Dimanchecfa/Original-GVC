@@ -1,6 +1,48 @@
 import { EditIcon, EyeIcon } from "../../../../components/icones";
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { alertClosed, alertPending } from "../../../../components/notification";
+import { HTTP_CLIENT } from "../../../../api/client";
 
 export const ShowStock = () => {
+	const navigate = useNavigate();
+	const location = useLocation();
+	const [moto , setMoto] = useState([]);
+	const [isLoading, setIsLoading] = useState(true);
+	const {state} = location;
+
+	useEffect (() => {
+		const {state} = location;
+		console.log(state?.numero_stock);
+		(async () => fetchMoto(state?.numero_stock))();
+	},[]);
+
+	const fetchMoto = async (numero_stock) => {
+		alertPending();
+		await HTTP_CLIENT.get(`http://localhost:8000/api/moto/stock/${numero_stock}`)
+			.then((response) => {
+				if(response?.data?.data.length > 0){
+					setMoto(response?.data);
+					console.log(moto);
+
+				setIsLoading(false);
+
+				setTimeout(() => {
+					alertClosed();
+				}
+				, 500);
+			}else{
+				alertClosed();
+				
+			}
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	}
+
+
+
     return ( 
         <>
 			<div className="row">

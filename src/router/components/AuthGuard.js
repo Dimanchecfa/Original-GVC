@@ -2,7 +2,7 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 
 const AuthGuard = ( { children }) => {
-   let auth = false;
+   let auth = true;
     if (auth) {
         return children;
     }
