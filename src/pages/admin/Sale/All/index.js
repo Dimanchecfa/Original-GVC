@@ -67,7 +67,7 @@ const AllSell = () => {
     return (
         <>
             <PageHeader title="Listes des Ventes" route={"/add_sale"} />
-            <div class="col-10 offset-1 col-xxl-8 d-flex">
+            <div class="col-10 offset-2 col-xxl-9 d-flex">
 				<div class="card flex-fill">
 					<div class=" card-header d-flex">
                         
@@ -104,7 +104,7 @@ const AllSell = () => {
 								<button class="btn btn-secondary btn-sm"
 									onClick={
 										() => {
-											navigate('/show_sale'  , {state : vente})
+											navigate('/show_sale'  , {state : vente} ,)
 											
 									}
 									}

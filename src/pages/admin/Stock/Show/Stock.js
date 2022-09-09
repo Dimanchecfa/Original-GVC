@@ -3,6 +3,7 @@ import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import { alertClosed, alertPending } from "../../../../components/notification";
 import { HTTP_CLIENT } from "../../../../api/client";
+import { BackButton } from '../../../../components/button/index';
 
 export const ShowStock = () => {
 	const navigate = useNavigate();
@@ -46,9 +47,7 @@ export const ShowStock = () => {
     return ( 
         <>
 			<div className="row">
-				<div class="col-4 offset-1 mb-5">
-					<button class="btn btn-danger">Retour</button>
-				</div>
+				<BackButton />
 			</div>
                     <div class="col-11 offset-1 col-xxl-10 d-flex ">
 							
@@ -58,7 +57,7 @@ export const ShowStock = () => {
 
 								<div class="card-header">
 
-									<h4 class="card-title mb-0">Detail du stock N 1010MMM</h4>
+									<h4 class="card-title mb-0">Detail du stock N { state?.numero}</h4>
 								</div>
 								<table class="table table-hover my-0">
 						<thead>
@@ -82,16 +81,21 @@ export const ShowStock = () => {
 								<td class="d-none d-md-table-cell text-center">{ moto?.marque}</td>
 								<td class="d-none d-md-table-cell text-center "> {  moto?.modele}</td>
 								<td class="d-none d-md-table-cell text-center">{ moto?.couleur}</td>
-								<td class="d-none d-md-table-cell text-center">{ moto?.statut}</td>
+								<td class="d-none d-md-table-cell text-center"><span class="badge bg-success">{ moto?.statut}</span></td>
 								<td class="d-none d-md-table-cell text-center">
-								<button class="btn btn-secondary btn-sm"
+								{
+									moto?.statut === "vendue" ? (
+										<button class="btn btn-secondary btn-sm"
 									onClick={
 										() => {
 											navigate('/show_motors'  , {state : moto})
 											
 									}
 									}
-								> <EyeIcon/>{" "}Details</button>{" "}
+								> <EyeIcon/>{" "}Details</button>
+									):null
+								}
+								{" "}
 								<button class="btn btn-primary btn-sm"
 								onClick={
 									() => {

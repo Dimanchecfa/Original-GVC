@@ -1,5 +1,5 @@
 import { Navigate, NavLink, useNavigate } from "react-router-dom";
-import { DashboardIcon, HistoryIcon, StockIcon, VenteIcon } from "../../../components/icones";
+import { DashboardIcon, HistoryIcon, SettingIcon, StockIcon, VenteIcon } from "../../../components/icones";
 
 const Sidebar = () => {
     
@@ -19,7 +19,7 @@ const navigate = useNavigate();
               <li class="sidebar-item active"  
                 onClick={
                   () => {
-                    navigate("/")
+                    navigate("/dashboard")
                   }
                 }
                 
@@ -53,10 +53,22 @@ const navigate = useNavigate();
                 </a>
               </li>
               
-              <li class="sidebar-item ">
-                <a class="sidebar-link" href="index.html">
+              <li class="sidebar-item "  onClick={
+                  () => {
+                    navigate("/all_history")
+                  }}>
+                <a class="sidebar-link" >
                   <HistoryIcon />{" "}
                   <span class="align-middle">Inventaires</span>
+                </a>
+              </li>
+              <li class="sidebar-item "  onClick={
+                  () => {
+                    navigate("/settings")
+                  }}>
+                <a class="sidebar-link" >
+                  <SettingIcon/>{" "}
+                  <span class="align-middle">Configuration</span>
                 </a>
               </li>
 

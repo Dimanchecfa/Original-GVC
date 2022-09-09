@@ -18,6 +18,11 @@ const ShowSell = () => {
       
         const {state} = location;
         console.log(state?.numero_serie);
+        const date = state.created_at;
+        const date2 = date.slice(0,10);
+        const date3 = date2.split('-').reverse().join('/');
+        console.log(date3);
+        state.created_at = date3;
        (async () => fetchCommerciale(state?.pseudo_commerciale))();
          (async () => fetchMoto(state?.numero_serie))();
        
@@ -93,7 +98,7 @@ const ShowSell = () => {
 
                         <div class="card-header">
 
-                            <h4 class="card-title mb-0">Detail de la vente de Mr { commerciale?.data?.[0].nom} le 10/10/2022</h4>
+                            <h4 class="card-title mb-0">Detail de la vente de Mr { commerciale?.data?.[0].nom} le { state.created_at}</h4>
                         </div>
                         <table class="table table-hover my-0">
                             <thead>
@@ -111,7 +116,6 @@ const ShowSell = () => {
                                     <td>{ state?.numero_serie }</td>
                                     <td class="d-none d-md-table-cell">{ moto?.marque}</td>
                                     <td class="d-none d-md-table-cell">{ moto?.modele}</td>
-
                                     <td class="d-none d-md-table-cell">{ moto?.couleur}</td>
                                     <td><span class="badge bg-success">{ moto?.statut}</span></td>
 
@@ -127,7 +131,7 @@ const ShowSell = () => {
 
                         <div class="card-header">
 
-                            <h4 class="card-title mb-0">Detail de la vente de Mr { commerciale?.data?.[0].nom} le 10/10/2022</h4>
+                            <h4 class="card-title mb-0">Detail de la vente de Mr { commerciale?.data?.[0].nom} le { state.created_at}</h4>
                         </div>
                         <table class="table table-hover my-0">
                             <thead>
@@ -138,7 +142,11 @@ const ShowSell = () => {
                                     <th class="text-center">Identifiant CNIB</th>
                                     <th class="text-center">Statut de paiement</th>
                                     <th class="text-center">Montant Payé</th>
-                                    <th class="text-center">Montant Restant</th>
+                                    {
+                                        state?.statut === "en_cours" ? (
+                                            <th class="text-center">Montant Restant</th>
+                                        ) : null
+                                    }
 
                                 </tr>
                             </thead>
@@ -149,12 +157,15 @@ const ShowSell = () => {
                                     <td class="text-center">{ state?.adresse_client}</td>
 
                                     <td class="text-center">{ state?.identifiant_client}</td>
-                                    <td  class="text-center"><span class="text-center">{ state?.statut}</span></td>
+                                    <td  class="text-center"><span class="text-center badge bg-success">{ state?.statut}</span></td>
                                     <td class="text-center">{ state?.montant_verse}</td>
-                                    <td class="text-center">{ state?.montant_restant}</td>
+                                    {
+                                        state?.statut === "en_cours" ? (
+                                            <td class="text-center">{ state?.montant_restant}</td>
+                                        ) : null
+                                    }
 
                                 </tr>
-
 
                             </tbody>
                         </table>
