@@ -13,17 +13,17 @@ export const ShowStock = () => {
 
 	useEffect (() => {
 		const {state} = location;
-		console.log(state?.numero_stock);
-		(async () => fetchMoto(state?.numero_stock))();
+		console.log(state?.numero);
+		(async () => fetchMoto(state?.numero))();
 	},[]);
 
-	const fetchMoto = async (numero_stock) => {
+	const fetchMoto = async (numero) => {
 		alertPending();
-		await HTTP_CLIENT.get(`http://localhost:8000/api/moto/stock/${numero_stock}`)
+		await HTTP_CLIENT.get(`http://localhost:8000/api/moto/stock/${numero}`)
 			.then((response) => {
 				if(response?.data?.data.length > 0){
-					setMoto(response?.data);
-					console.log(moto);
+					const data = response?.data?.data;
+					setMoto(data);
 
 				setIsLoading(false);
 
@@ -61,44 +61,76 @@ export const ShowStock = () => {
 									<h4 class="card-title mb-0">Detail du stock N 1010MMM</h4>
 								</div>
 								<table class="table table-hover my-0">
-									<thead>
-										<tr>
-											<th>N serie</th>
-											<th class="d-none d-md-table-cell">Marque</th>
-											<th class="d-none d-md-table-cell">Model</th>
-											<th class="d-none d-md-table-cell">Couleur</th>
-											<th class="d-none d-md-table-cell">Statut</th>
-											<th class="d-none d-md-table-cell">Action</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>RLCUEMY280652</td>
-											<td class="d-none d-md-table-cell">YAMAHA</td>
-											<td class="d-none d-md-table-cell">SIRIUS</td>
+						<thead>
+							<tr>
+								<th class="text-center">Numero de serie</th>
+								
+								<th class="text-center">Marque</th>
+								<th class="text-center">Model</th>
+								<th class="text-center">Couleur</th>
+								<th class="text-center">Statut</th>
+								<th class="text-center">Action</th>
+
+								
+							</tr>
+						</thead>
+						<tbody>
+							{
+								moto.map((moto , index) => (
+									<tr key={index}>
+								<td class="text-center">{ moto?.numero_serie}</td>
+								<td class="d-none d-md-table-cell text-center">{ moto?.marque}</td>
+								<td class="d-none d-md-table-cell text-center "> {  moto?.modele}</td>
+								<td class="d-none d-md-table-cell text-center">{ moto?.couleur}</td>
+								<td class="d-none d-md-table-cell text-center">{ moto?.statut}</td>
+								<td class="d-none d-md-table-cell text-center">
+								<button class="btn btn-secondary btn-sm"
+									onClick={
+										() => {
+											navigate('/show_motors'  , {state : moto})
 											
-											<td class="d-none d-md-table-cell">NOIR MAT</td>
-											<td><span class="badge bg-success">Vendu</span></td>
-											<td class="d-none d-md-table-cell">
-												<button type="button" class="btn btn-primary"> <EditIcon />Editer</button>{" "}
-												<button type="button" class="btn btn-secondary"><EyeIcon/>Detail</button>
-											</td>
-										</tr>
-										<tr>
-											<td>RLCUEMY280652</td>
-											<td class="d-none d-md-table-cell">YAMAHA</td>
-											<td class="d-none d-md-table-cell">SIRIUS</td>
-											
-											<td class="d-none d-md-table-cell">NOIR MAT</td>
-											<td><span class="badge bg-danger">Non Vendu</span></td>
-											<td class="d-none d-md-table-cell">
-												<button type="button" class="btn btn-primary"> <EditIcon />Editer</button> {" "}
-												<button type="button" class="btn btn-secondary"><EyeIcon/>Detail</button>
-											</td>
-										</tr>
-										
-									</tbody>
-								</table>
+									}
+									}
+								> <EyeIcon/>{" "}Details</button>{" "}
+								<button class="btn btn-primary btn-sm"
+								onClick={
+									() => {
+										navigate('/edit_sale')
+								}
+								}
+								> <EditIcon/>{" "}Modifier</button>
+								</td>
+							
+							</tr>))
+							}
+							{ 
+							isLoading ? (
+								<tr>
+									<td colSpan="6" className="text-center">
+										...Veuillez patienter
+									</td>
+								</tr>
+							): null
+							}
+							{
+								!isLoading && moto.length === 0 ? (
+									<tr>
+										<td colSpan="6" className="text-center">
+											Aucune moto pour le moment
+										</td>
+									</tr>
+								): null
+							}
+						
+							
+							
+						</tbody>
+						
+							
+									
+								
+						
+					</table>
 							</div>
 						</div>
         </>

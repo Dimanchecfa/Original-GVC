@@ -68,7 +68,8 @@ const AllStock = () => {
 								<button class="btn btn-secondary btn-sm"
 									onClick={
 										() => {
-											navigate('/show_stock'  , {state : stock})
+											navigate('/show_stock'  , {state: stock})
+											console.log(stock?.numero)
 											
 									}
 									}

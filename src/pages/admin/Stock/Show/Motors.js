@@ -1,6 +1,16 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 
 export const ShowMotors = () => {
+    const [isLoading, setIsLoading] = React.useState(true);
+    const [motors, setMotors] = React.useState([]);
+    const location = useLocation();
+    const {state} = location;
+
+    React.useEffect(() => {
+        const {state} = location;
+        console.log(state?.numero);
+
     return (
         <>
             <div className="row">
@@ -32,7 +42,7 @@ export const ShowMotors = () => {
 
                         <div class="card-header">
 
-                            <h4 class="card-title mb-0">Detail de la moto N MMM44444M4M4M4M4M</h4>
+                            <h4 class="card-title mb-0">Detail de la moto N { state?.numero_serie}</h4>
                         </div>
                         <table class="table table-hover my-0">
                             <thead>
@@ -47,12 +57,12 @@ export const ShowMotors = () => {
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>RLCUEMY280652</td>
-                                    <td class="d-none d-md-table-cell">YAMAHA</td>
-                                    <td class="d-none d-md-table-cell">SIRIUS</td>
+                                    <td>{ state?.numero_serie }</td>
+                                    <td class="d-none d-md-table-cell">{ state?.marque}</td>
+                                    <td class="d-none d-md-table-cell">{ state?.modele}</td>
 
-                                    <td class="d-none d-md-table-cell">NOIR MAT</td>
-                                    <td><span class="badge bg-success">Vendu</span></td>
+                                    <td class="d-none d-md-table-cell">{ state?.couleur}</td>
+                                    <td><span class="badge bg-success">{ state?.statut}</span></td>
 
                                 </tr>
 
@@ -66,7 +76,7 @@ export const ShowMotors = () => {
 
                         <div class="card-header">
 
-                            <h4 class="card-title mb-0">Detail de la moto N MMM44444M4M4M4M4M</h4>
+                            <h4 class="card-title mb-0">Detail de la moto N  {state?.numero_serie}</h4>
                         </div>
                         <table class="table table-hover my-0">
                             <thead>

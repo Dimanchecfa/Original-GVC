@@ -58,6 +58,7 @@ const AllSell = () => {
 				setIsLoading(false);
 			})
 			.catch((error) => {
+				setIsLoading(false);
 				console.log(error);
 			});
 	}
@@ -66,7 +67,7 @@ const AllSell = () => {
     return (
         <>
             <PageHeader title="Listes des Ventes" route={"/add_sale"} />
-            <div class="col-11 offset-2 col-xxl-9 d-flex">
+            <div class="col-10 offset-1 col-xxl-8 d-flex">
 				<div class="card flex-fill">
 					<div class=" card-header d-flex">
                         
