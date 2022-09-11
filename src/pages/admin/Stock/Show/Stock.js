@@ -39,6 +39,10 @@ export const ShowStock = () => {
 			})
 			.catch((error) => {
 				console.log(error);
+				setTimeout(() => {
+					alertClosed();
+				}
+				, 1000);
 			});
 	}
 
@@ -63,7 +67,6 @@ export const ShowStock = () => {
 						<thead>
 							<tr>
 								<th class="text-center">Numero de serie</th>
-								
 								<th class="text-center">Marque</th>
 								<th class="text-center">Model</th>
 								<th class="text-center">Couleur</th>
@@ -85,7 +88,7 @@ export const ShowStock = () => {
 								<td class="d-none d-md-table-cell text-center">
 								{
 									moto?.statut === "vendue" ? (
-										<button class="btn btn-secondary btn-sm"
+										<button class="btn btn-primary btn-sm"
 									onClick={
 										() => {
 											navigate('/show_motors'  , {state : moto})
@@ -96,7 +99,9 @@ export const ShowStock = () => {
 									):null
 								}
 								{" "}
-								<button class="btn btn-primary btn-sm"
+								<button class={
+									moto?.statut === "vendue" ? "btn btn-secondary btn-sm" : "offset-3 btn btn-secondary btn-sm"
+								}
 								onClick={
 									() => {
 										navigate('/edit_sale')

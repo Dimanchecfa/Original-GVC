@@ -19,22 +19,12 @@ const AllSell = () => {
 		let month = '' + (d.getMonth() + 1);
 		let day = '' + d.getDate();
 		const year = d.getFullYear();
-		//return 2022-02-02
 		if (month.length < 2) month = '0' + month;
 		if (day.length < 2) day = '0' + day;
 		return [year, month, day].join('-');
 	}
     useEffect(() => {
-        const dateFormat = (date) => {
-            const d = new Date(date);
-            let month = '' + (d.getMonth() + 1);
-            let day = '' + d.getDate();
-            const year = d.getFullYear();
-            //return 2022-02-02
-			if (month.length < 2) month = '0' + month;
-			if (day.length < 2) day = '0' + day;
-			return [year, month, day].join('-');
-        }
+      
         
       
        console.log(dateFormat(startDate));
@@ -112,7 +102,7 @@ const AllSell = () => {
 								<button class="btn btn-primary btn-sm"
 								onClick={
 									() => {
-										navigate('/edit_sale')
+										navigate('/edit_sale' , {state : vente} ,)
 								}
 								}
 								> <EditIcon/>{" "}Modifier</button>

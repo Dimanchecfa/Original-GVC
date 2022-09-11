@@ -98,8 +98,8 @@ const AllHistory = () => {
       <div class="card-title">
             <h3>Historique total</h3>
         </div>
-        <Card title="Nombre de moto vendu " svg={<i class="fas fa-2x fa-car"></i>} route="/admin/stock/vente" state="vente" data={ motoVendue} button="Details"/>
-        <Card title="Nombre de moto En Stock" svg={<i class="fas fa-2x fa-usd"></i>} route="/admin/stock/vente"  data={ motoEnStock} button="Details"/>
+        <Card title="Nombre de moto vendu " svg={<i class="fas fa-2x fa-car"></i>} route="/moto_nostocked" state="vente" data={ motoVendue} button="Details"/>
+        <Card title="Nombre de moto En Stock" svg={<i class="fas fa-2x fa-usd"></i>} route="/moto_stocked"  data={ motoEnStock} button="Details"/>
        
       </div>
     </div>

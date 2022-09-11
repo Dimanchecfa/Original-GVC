@@ -3,21 +3,21 @@ import { HTTP_CLIENT } from "../../../../../api/client";
 import { EditIcon } from "../../../../../components/icones";
 import PageHeader from "../../../../../components/pageheader/index";
 import { useNavigate } from "react-router-dom";
-import AddMarque from "../Add/index";
 
-const Allmarque = () => {
+
+const Allmodele = () => {
   const navigate = useNavigate();
-  const [marque, setMarque] = React.useState([]);
+  const [modele, setmodele] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
 
   React.useEffect(() => {
-    (async () => fetchmarque())();
+    (async () => fetchModele())();
   }, []);
 
-  const fetchmarque = async () => {
-    await HTTP_CLIENT.get("http://localhost:8000/api/marque")
+  const fetchModele = async () => {
+    await HTTP_CLIENT.get("http://localhost:8000/api/model")
       .then((response) => {
-        setMarque(response.data?.data);
+        setmodele(response.data?.data);
         console.log(response.data);
         setIsLoading(false);
       })
@@ -27,29 +27,31 @@ const Allmarque = () => {
   };
   return (
     <>
-      <PageHeader title="Marque" route="/add_marque" />
+      <PageHeader title="modele" route="/add_modele" />
       <div className="row">
-        <div class="col-5 offset-3 col-xxl-5 d-flex">
+        <div class="col-7 offset-2 col-xxl-56 d-flex">
           <div class="card flex-fill">
             <div class=" card-header d-flex">
-              <h5 class=" col-md-2 card-title">Listes des marques</h5>
+              <h5 class=" col-md-2 card-title">Listes des modeles</h5>
             </div>
             <table class="table table-hover my-0">
               <thead>
                 <tr>
                   <th class="text-center">Nom </th>
+                    <th class="text-center">Nom de la Marque</th>
                   <th class="text-center">Action </th>
                 </tr>
               </thead>
               <tbody>
-                {marque.map((marque, index) => (
+                {modele.map((modele, index) => (
                   <tr key={index}>
-                    <td class="text-center">{marque?.nom}</td>
+                    <td class="text-center">{modele?.nom}</td>
+                    <td class="text-center">{modele?.marque_nom}</td>
                     <td class="d-none d-md-table-cell text-center">
                       <button
                         class="btn btn-primary btn-sm"
                         onClick={() => {
-                          navigate("/edit_marque" , { state:  marque  });
+                          navigate("/edit_modele" , { state:  modele  });
                         }}
                       >
                         {" "}
@@ -65,10 +67,10 @@ const Allmarque = () => {
                     </td>
                   </tr>
                 ) : null}
-                {!isLoading && marque.length === 0 ? (
+                {!isLoading && modele.length === 0 ? (
                   <tr>
                     <td colSpan="6" className="text-center">
-                      Aucune marque
+                      Aucune modele
                     </td>
                   </tr>
                 ) : null}
@@ -82,4 +84,4 @@ const Allmarque = () => {
   );
 };
 
-export default Allmarque;
+export default Allmodele;

@@ -24,7 +24,7 @@ export const ShowMotors = () => {
                     const data = response?.data?.data;
                     setVente(data?.[0]);
                     console.log(data);
-                    (async () => fetchCommerciale(data?.[0].pseudo_commerciale))();
+                    (async () => fetchCommerciale(data?.[0]?.pseudo_commerciale))();
                     setIsLoading(false);
                     setTimeout(() => {
                         alertClosed();
@@ -48,6 +48,10 @@ export const ShowMotors = () => {
                 })
                 .catch((error) => {
                     console.log(error);
+                    setTimeout(() => {
+                        alertClosed();
+                    }, 500);
+
                 });
         }
 

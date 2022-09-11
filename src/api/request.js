@@ -75,7 +75,7 @@ export const getAllMarque = () => {
     new Promise ((resolve, reject) => {
         HTTP_CLIENT.get("/marque")
             .then((response) => {
-                resolve(response.data);
+                resolve(response);
             })
             .catch((error) => {
                 const message = handlingErrors(error);

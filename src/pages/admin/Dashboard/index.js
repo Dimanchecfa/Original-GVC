@@ -152,7 +152,7 @@ const Dashboard = () => {
 
 				</div>
 			</div>
-			<div class="col-11 offset-2 col-xxl-9 d-flex">
+			<div class="col-10 offset-2 col-xxl-8 d-flex">
 				<div class="card flex-fill">
 					<div class="card-header">
 

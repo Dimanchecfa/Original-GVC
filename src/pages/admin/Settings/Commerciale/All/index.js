@@ -3,6 +3,7 @@ import { HTTP_CLIENT } from '../../../../../api/client';
 import { EditIcon } from '../../../../../components/icones';
 import PageHeader from '../../../../../components/pageheader/index';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const AllCommerciale = () => {
     const navigate = useNavigate();
@@ -24,6 +25,16 @@ const AllCommerciale = () => {
                 console.log(error);
             });
     }
+
+
+
+	
+	
+	
+	
+
+
+
     return (
         <>
             <PageHeader title='Commerciale' route="/add_commerciale" />
@@ -60,10 +71,43 @@ const AllCommerciale = () => {
 								<button class="btn btn-primary btn-sm"
 								onClick={
 									() => {
-										navigate('/edit_sale');
+										navigate('/edit_commerciale' , {state : commerciale});
 								}
 								}
-								> <EditIcon/>{" "}Modifier</button>
+								> <EditIcon/>{" "}Modifier</button>{" "}
+								<button class="btn btn-danger btn-sm"
+								onClick={
+									() => {	
+										Swal.fire({
+											title: 'Etes vous sur ?',
+											text: "Vous ne pourrez pas revenir en arrière !",
+											icon: 'warning',
+											showCancelButton: true,
+											confirmButtonColor: '#3085d6',
+											cancelButtonColor: '#d33',
+											confirmButtonText: 'Oui, supprimer !'
+										  }).then((result) => {
+											if (result.isConfirmed) {
+												HTTP_CLIENT.delete(`http://localhost:8000/api/commerciale/${commerciale.id}`)
+												.then((response) => {
+													console.log(response.data);
+													fetchCommerciale();
+												})
+												.catch((error) => {
+													console.log(error);
+												});
+												
+												
+											  Swal.fire(
+												'Supprimé!',
+												'Votre fichier a été supprimé.',
+												'success'
+											  )
+											}
+										  })
+										}
+								}
+								> <EditIcon/>{" "}Supprimer</button>
 								</td>
 							
 							</tr>))

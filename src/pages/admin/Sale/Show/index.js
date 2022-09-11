@@ -44,6 +44,11 @@ const ShowSell = () => {
             })
             .catch((error) => {
                 console.log(error);
+                setTimeout(() => {
+                    alertClosed();
+                    
+                     }, 500);
+            
             });
     }
     const fetchMoto = async (numero_serie) => {
@@ -53,9 +58,15 @@ const ShowSell = () => {
                 setMoto(response?.data?.data);
                 console.log(moto.data);
                 setIsLoading(false);
+                setTimeout(() => {
+                    alertClosed();
+                }, 500);
             })
             .catch((error) => {
                 console.log(error);
+                setTimeout(() => {
+                    alertClosed();
+                }, 500);
             });
     }
     
