@@ -188,13 +188,7 @@ const Dashboard = () => {
 									}
 									}
 								> <EyeIcon/>{" "}Details</button>{" "}
-								<button class="btn btn-primary btn-sm"
-								onClick={
-									() => {
-										navigate('/edit_sale')
-								}
-								}
-								> <EditIcon/>{" "}Modifier</button>
+							
 								</td>
 							
 							</tr>))

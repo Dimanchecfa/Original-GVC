@@ -104,7 +104,7 @@ export const ShowStock = () => {
 								}
 								onClick={
 									() => {
-										navigate('/edit_sale')
+										navigate('/edit_moto'  , {state : moto})
 								}
 								}
 								> <EditIcon/>{" "}Modifier</button>

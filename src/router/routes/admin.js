@@ -21,6 +21,7 @@ import AddModele from "../../pages/admin/Settings/Model/Add";
 import EditModele from "../../pages/admin/Settings/Model/Edit";
 import { IsStocked } from "../../pages/admin/History/Sale/Stocker";
 import NoStocked from "../../pages/admin/History/Sale/NoStock";
+import EditMoto from "../../pages/admin/Stock/Edit";
 
 
 
@@ -51,6 +52,7 @@ const AdminRoutes = () => {
                 <Route path="/edit_modele" element={< EditModele/>} />
                 <Route path="/moto_stocked" element={<IsStocked />} />
                 <Route path="/moto_nostocked" element={<NoStocked />} />
+                <Route path="/edit_moto" element={<EditMoto />} />
                 <Route path="*" element={<h1>page non touve</h1>} />
 
 
