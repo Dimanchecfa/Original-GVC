@@ -117,9 +117,9 @@ const navigate = useNavigate();
    
     e.preventDefault();
   
-if(numero_serie === "" || pseudo_commerciale === "" || nom_client === "" || numero_client === "" || adresse_client === "" || identifiant_client === "" || montant_verse === "" || montant_restant === "" || date_versement === "" || prix_vente === "" || couleur === "" || modele === "" || marque === "" ){
- return openNotificationWithIcon('error', 'Erreur', 'Veuillez remplir tous les champs');
-}
+// if(numero_serie === "" || pseudo_commerciale === "" || nom_client === "" || numero_client === "" || adresse_client === "" || identifiant_client === "" || montant_verse === "" || montant_restant === "" || date_versement === "" || prix_vente === "" || couleur === "" || modele === "" || marque === "" ){
+//  return openNotificationWithIcon('error', 'Erreur', 'Veuillez remplir tous les champs');
+// }
 const data = {
   nom_client,
   numero_client,
@@ -142,7 +142,7 @@ const data = {
       .then((res) => {
         alertPending();
         console.log(res);
-        navigate('/dashboard');
+        navigate('/pdfe' , {state : data});
         setTimeout(() => {
           alertClosed();
           openNotificationWithIcon('success' , 'Vente ajoutée avec succès');

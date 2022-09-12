@@ -11,15 +11,23 @@ const styles = StyleSheet.create({
   },
 });
 
-export const Tables = () => (
+export const Tables = ( 
+    {
+        montant_paye ,
+        montant_restant ,
+        date__versement ,
+        total ,
+    }
+) => (
   <View style={styles.tableContainer}>
     <Header />
   
       <Row 
-        montant_paye = "1000"
-        montant_restant = "2000"
-        date__versement = "2020-10-10"
-        total = "3000"
+        montant_paye = {montant_paye}
+        montant_restant = {montant_restant}
+        date__versement = {date__versement}
+        total = {total}
+
       />
    
    

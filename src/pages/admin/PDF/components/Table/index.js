@@ -11,16 +11,25 @@ const styles = StyleSheet.create({
   },
 });
 
-export const Table = () => (
+export const Table = (
+  {
+   numero_serie ,
+    marque ,
+    modele ,
+    couleur ,
+    prix ,
+    
+  }
+) => (
   <View style={styles.tableContainer}>
     <Header />
   
       <Row 
-        numero_serie = "1000"
-        marque = "2000"
-        modele = "2020-10-10"
-        couleur = "3000"
-        prix = "3000"
+        numero_serie = {numero_serie}
+        marque = {marque}
+        modele = {modele}
+        couleur = {couleur}
+        prix = {prix}
       />
    
    

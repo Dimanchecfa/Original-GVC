@@ -1,4 +1,6 @@
 import { View, StyleSheet, Text, Image } from '@react-pdf/renderer';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Table } from '../components/Table';
 import { Tables } from '../components/Table/paiements';
 
@@ -82,7 +84,14 @@ const styles = StyleSheet.create({
   },
 });
 
-export const InvoiceInfo = () => (
+export const InvoiceInfo = () => {
+  const location = useLocation();
+  const { state } = location;
+  useEffect(() => {
+    console.log(state);
+  }, []);
+
+  return (
  <>
   <View style={styles.header}>
     <View>
@@ -137,13 +146,24 @@ export const InvoiceInfo = () => (
     <View style={styles.Moto} >
       <Text style={styles.headerMoto}>Informations de la moto</Text>
     </View>
-    <Table />
+    <Table 
+    numero_serie="Numero de serie"
+    marque="Marque"
+    modele="Modele"
+    couleur="Couleur"
+    prix="Prix"
+    />
   </View>
   <View>
     <View style={styles.Moto} >
       <Text style={styles.headerMoto}>Paiements</Text>
     </View>
-    <Tables />
+    <Tables 
+    montant_paye="1000"
+    montant_restant="1000"
+    date__versement="2021-01-01"
+    total="3000"
+    />
   </View>
   <View style={styles.header}>
     <View>
@@ -171,4 +191,5 @@ export const InvoiceInfo = () => (
     </View>
   </View>
   </>
-);
+  );
+};
