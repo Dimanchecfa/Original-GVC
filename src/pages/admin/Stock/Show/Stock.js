@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { alertClosed, alertPending } from "../../../../components/notification";
 import { HTTP_CLIENT } from "../../../../api/client";
 import { BackButton } from '../../../../components/button/index';
+import { Empty, Pagination, Spin } from "antd";
 
 export const ShowStock = () => {
 	const navigate = useNavigate();
@@ -11,20 +12,29 @@ export const ShowStock = () => {
 	const [moto , setMoto] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const {state} = location;
+	const [current, setCurrent] = useState(0);
+	const [total, setTotal] = useState(1);
 
 	useEffect (() => {
 		const {state} = location;
-		console.log(state?.numero);
-		(async () => fetchMoto(state?.numero))();
-	},[]);
+		
+		(async () => fetchMoto(state?.numero , current))();
+	},[current]);
+	const onChange = (page) => {
+		console.log(page);
+		setCurrent(page);
+	  };
 
-	const fetchMoto = async (numero) => {
+	const fetchMoto = async (numero , page) => {
 		alertPending();
-		await HTTP_CLIENT.get(`http://localhost:8000/api/moto/stock/${numero}`)
+		await HTTP_CLIENT.get(`http://localhost:8000/api/moto/page/${page}/${numero}`)
 			.then((response) => {
-				if(response?.data?.data.length > 0){
+				
 					const data = response?.data?.data;
-					setMoto(data);
+					setMoto(data?.data);
+					setCurrent(data?.current_page);
+					setTotal(data?.total);
+					console.log(data);
 
 				setIsLoading(false);
 
@@ -32,15 +42,13 @@ export const ShowStock = () => {
 					alertClosed();
 				}
 				, 500);
-			}else{
-				alertClosed();
-				
-			}
+			
 			})
 			.catch((error) => {
 				console.log(error);
 				setTimeout(() => {
 					alertClosed();
+					setIsLoading(false);
 				}
 				, 1000);
 			});
@@ -116,7 +124,7 @@ export const ShowStock = () => {
 							isLoading ? (
 								<tr>
 									<td colSpan="6" className="text-center">
-										...Veuillez patienter
+										<Spin />
 									</td>
 								</tr>
 							): null
@@ -125,7 +133,7 @@ export const ShowStock = () => {
 								!isLoading && moto.length === 0 ? (
 									<tr>
 										<td colSpan="6" className="text-center">
-											Aucune moto pour le moment
+											<Empty />
 										</td>
 									</tr>
 								): null
@@ -134,6 +142,21 @@ export const ShowStock = () => {
 							
 							
 						</tbody>
+						<tr class="offset-2 text-center">
+						<td colSpan="6">
+						{
+							moto.length > 0 && (
+								<Pagination current={current} onChange={onChange} total={
+									total } />
+								
+							)
+						}
+								
+						
+						
+						
+						</td>
+						</tr>
 						
 							
 									

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { HTTP_CLIENT } from "../../../../api/client";
+import { openNotificationWithIcon } from "../../../../components/alert";
 import { BackButton } from "../../../../components/button";
 
 const AddStock = () => {
@@ -23,6 +24,7 @@ const AddStock = () => {
         }
       HTTP_CLIENT.post("/stock" , data)
         .then((res) => {
+            openNotificationWithIcon("success", "Ajout effectué avec succès");
             console.log(res);
             setIsAddMotor(true);
             }
@@ -72,6 +74,7 @@ const AddStock = () => {
         }
         HTTP_CLIENT.post("moto" , data)
         .then((res) => {
+            openNotificationWithIcon("success", "Ajout effectué avec succès");
             console.log(res);
            
             setNumero_serie("");

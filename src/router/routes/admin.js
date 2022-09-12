@@ -22,6 +22,8 @@ import EditModele from "../../pages/admin/Settings/Model/Edit";
 import { IsStocked } from "../../pages/admin/History/Sale/Stocker";
 import NoStocked from "../../pages/admin/History/Sale/NoStock";
 import EditMoto from "../../pages/admin/Stock/Edit";
+import PDF from "../../pages/admin/PDF/Sale";
+import { InvoicePDF } from "../../pages/admin/PDF";
 
 
 
@@ -54,6 +56,8 @@ const AdminRoutes = () => {
                 <Route path="/moto_nostocked" element={<NoStocked />} />
                 <Route path="/edit_moto" element={<EditMoto />} />
                 <Route path="*" element={<h1>page non touve</h1>} />
+               <Route path="/pdfe" element={ <InvoicePDF />} />
+                
 
 
 
@@ -62,6 +66,8 @@ const AdminRoutes = () => {
 
 
             </Route>
+            <Route path="/pdf" element={< PDF />} />
+
         </Routes>
      );
 }

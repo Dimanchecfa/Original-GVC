@@ -4,25 +4,39 @@ import { EditIcon } from '../../../../../components/icones';
 import PageHeader from '../../../../../components/pageheader/index';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { openNotificationWithIcon } from '../../../../../components/alert';
+import { Pagination, Spin } from 'antd';
 
 const AllCommerciale = () => {
     const navigate = useNavigate();
     const [commerciale, setCommerciale] = React.useState([]);
    const [isLoading, setIsLoading] = React.useState(true);
+   const [current, setCurrent] = React.useState(0);
+   const [total, setTotal] = React.useState(0);
 
     React.useEffect(() => {
-        (async () => fetchCommerciale())();
-    }, []);
+        (async () => fetchCommerciale(current))();
+    }, [current]);
 
-    const fetchCommerciale = async () => {
-        await HTTP_CLIENT.get("http://localhost:8000/api/commerciale")
+    const fetchCommerciale = async (page) => {
+        await HTTP_CLIENT.get(`/commerciale/page/${page}`)
             .then((response) => {
-                setCommerciale(response.data?.data);
-                console.log(response.data);
-                setIsLoading(false);
+                const data = response?.data?.data;
+				setCommerciale(data?.data);
+				setCurrent(data?.current_page);
+				setTotal(data?.total);
+                setTimeout(() => {
+					setIsLoading(false);
+				}
+				, 500);
             })
             .catch((error) => {
                 console.log(error);
+				setTimeout(() => {
+					setIsLoading(false);
+				}
+				, 500);
+				openNotificationWithIcon('error', 'Erreur', 'Erreur de connexion au serveur Veuillez mettre a jour la page');
             });
     }
 
@@ -116,7 +130,7 @@ const AllCommerciale = () => {
 							isLoading ? (
 								<tr>
 									<td colSpan="6" className="text-center">
-										...Veuillez patienter
+										<Spin />
 									</td>
 								</tr>
 							): null
@@ -134,6 +148,11 @@ const AllCommerciale = () => {
 							
 							
 						</tbody>
+							<tr>
+								<td colSpan="6" className="text-center">
+								<Pagination current={current} total={total} onChange={(page) => setCurrent(page)} />
+								</td>
+							</tr>
 						
 							
 									

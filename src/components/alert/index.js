@@ -1,74 +1,9 @@
-import React from "react";
-import { toast, Slide } from "react-toastify";
+import {  notification, Space } from 'antd';
+import React from 'react';
 
-import "react-toastify/dist/ReactToastify.css";
-import ToastContent from "./ToastContent";
-// toast.configure();
-
-export const basicNotif = (title, message, status = "secondary") => {
-    toast(
-        <ToastContent
-            title={title}
-            message={message}
-            // icon={() => <Bell size={20} />}
-            status={status}
-        />,
-        {
-            transition: Slide,
-            hideProgressBar: true,
-            autoClose: 5000,
-            closeButton: true,
-        }
-    );
-};
-
-export const successNotif = (title, message, status = "success") => {
-    toast.success(
-        <ToastContent
-            title={title}
-            message={message}
-            
-            status={status}
-        />,
-        {
-            transition: Slide,
-            hideProgressBar: true,
-            autoClose: 5000,
-            closeButton: true,
-        }
-    );
-};
-
-export const errorNotif = (title, message, status = "danger") => {
-    toast.error(
-        <ToastContent
-            title={title}
-            message={message}
-            // icon={() => <Minus size={20} />}
-            status={status}
-        />,
-        {
-            transition: Slide,
-            hideProgressBar: true,
-            autoClose: 5000,
-            closeButton: true,
-        }
-    );
-};
-
-export const warningNotif = (title, message, status = "warning") => {
-    toast.warn(
-        <ToastContent
-            title={title}
-            message={message}
-            // icon={() => <AlertCircle size={20} />}
-            status={status}
-        />,
-        {
-            transition: Slide,
-            hideProgressBar: true,
-            autoClose: 5000,
-            closeButton: true,
-        }
-    );
+ export const openNotificationWithIcon = (type , message , description) => {
+  notification[type]({
+    message: [message],
+    description: [description]
+  });
 };

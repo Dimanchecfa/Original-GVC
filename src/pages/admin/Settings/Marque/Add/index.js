@@ -32,7 +32,7 @@ const AddMarque = () => {
                         icon: 'success',
                         title: 'Ajout effectué avec succès',
                         showConfirmButton: false,
-                        timer: 1500
+                        timer: 1500,
                     })
                 })
                 .catch((error) => {

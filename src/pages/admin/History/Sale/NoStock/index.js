@@ -1,3 +1,4 @@
+import { Empty, Spin } from "antd";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { HTTP_CLIENT } from "../../../../../api/client";
@@ -28,16 +29,25 @@ const NoStocked = () => {
                 alertClosed();
             }
             , 500);
-            setIsLoading(false);
+           setTimeout(() => {
+			setIsLoading(false);
+		   }
+		   , 1000);
             
         })
         .catch((error) => {
             console.log(error);
-            setIsLoading(false);
+            
             setTimeout(() => {
                 alertClosed();
+				
             }
-            , 1000);
+            , 800);
+			setTimeout(() => {
+				setIsLoading(false);
+				
+			}
+			, 1000);
         });
     }
     return ( 
@@ -96,7 +106,7 @@ const NoStocked = () => {
 							isLoading ? (
 								<tr>
 									<td colSpan="6" className="text-center">
-										...Veuillez patienter
+										<Spin size="large" />
 									</td>
 								</tr>
 							): null
@@ -105,7 +115,7 @@ const NoStocked = () => {
 								!isLoading && motos.length === 0 ? (
 									<tr>
 										<td colSpan="6" className="text-center">
-											Aucune moto pour le moment
+											<Empty description="Aucune moto en vendu" />
 										</td>
 									</tr>
 								): null

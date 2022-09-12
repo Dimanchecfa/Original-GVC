@@ -2,8 +2,11 @@ import React from "react";
 import { HTTP_CLIENT } from "../../../../../api/client";
 import { BackButton } from "../../../../../components/button";
 import PageHeader from "../../../../../components/pageheader";
+import { useNavigate } from 'react-router-dom';
+import { openNotificationWithIcon } from "../../../../../components/alert";
 
 const AddCommerciale = () => {
+  const navigate = useNavigate();
     const [pseudo , setPseudo] = React.useState("");
     const [nom, setNom] = React.useState("");
     const [numero, setNumero] = React.useState("");
@@ -20,6 +23,8 @@ const AddCommerciale = () => {
         console.log(data);
         HTTP_CLIENT.post("/commerciale", data , )
             .then((res) => {
+              navigate("/all_commerciale");
+              openNotificationWithIcon("success", "Ajout effectué avec succès");
                 console.log(res);
             }
             )

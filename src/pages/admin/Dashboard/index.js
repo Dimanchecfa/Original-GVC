@@ -5,14 +5,16 @@ import  { getAllVente, } from "../../../api/request";
 import { Axios } from 'axios';
 import { HTTP_CLIENT } from '../../../api/client';
 import PaginationPage from "../../../components/paginate";
+import { openNotificationWithIcon } from "../../../components/alert";
+import { Spin, Pagination, Empty } from 'antd';
 
 const Dashboard = () => {
 	const navigate = useNavigate();
 	const [moto , setMoto] = useState([]);
 	const [price , setPrice] = useState([]);
 	const [vente , setVente] = useState([]);
-	const [currentPage , setCurrentPage] = useState(0);
-	const [totalPage , setTotalPage] = useState(0);
+	const [current , setCurrent] = useState(0);
+	const [total , setTotal] = useState(0);
 	const [isLoading , setIsLoading] = useState(true);
 	
 //obtenir l ' heure a partir de la date 2002-02-02T00:00:00.000Z
@@ -25,13 +27,9 @@ const Dashboard = () => {
 	useEffect(() => {
 		(async () => fetchMoto())();
 		(async () => fetchPrice())();
-		(async () => fetchTodayVente(0))();
-		const getHour = (date) => {
-			const d = '2002-02-02T10:00:00.000000Z'
-			//obtenir heure et minute
-			const hour = d.slice(11, 16);
-			return hour;
-		}
+		(async () => fetchTodayVente(current))();
+		
+	
 		
 		
 	}, []);
@@ -58,22 +56,18 @@ const Dashboard = () => {
 				});
 	}
 	const fetchTodayVente = async (page) => {
-		await HTTP_CLIENT.get(`http://localhost:8000/api/vente/today/${page + 1}`)
+		await HTTP_CLIENT.get(`http://localhost:8000/api/vente/today/${page}`)
 				.then((response) => {
-					const ventes = response.data;
+					const data = response?.data?.data;
+					setVente(data?.data);
+					setCurrent(data?.current_page);
+					setTotal(data?.total);
+					
 					
 					
 
 					
-					if(ventes?.data?.data?.length > 0){
-						setCurrentPage(ventes.data.current_page);
-						setTotalPage(ventes.data.last_page);
-						setVente(ventes.data.data);
-						console.log(vente);
-						setIsLoading(false);
-						
-						
-					}
+				
 					setIsLoading(false);
 				})
 				.catch((error) => {
@@ -197,7 +191,7 @@ const Dashboard = () => {
 							isLoading ? (
 								<tr>
 									<td colSpan="6" className="text-center">
-										...Veuillez patienter
+										<Spin size="large" />
 									</td>
 								</tr>
 							): null
@@ -206,7 +200,7 @@ const Dashboard = () => {
 								!isLoading && vente.length === 0 ? (
 									<tr>
 										<td colSpan="6" className="text-center">
-											Aucune vente pour le moment
+											<Empty description="Aucune vente pour le moment" />
 										</td>
 									</tr>
 								): null
@@ -215,27 +209,22 @@ const Dashboard = () => {
 							
 							
 						</tbody>
-						
+								{
+									vente.length > 0 ? (
+
+						<tr>
+						<td colSpan="6" className="text-center">
+						<Pagination current={current} total={total} onChange={(page) => setCurrent(page)} />
+						</td>
+					</tr>
+									): null
+								}
 							
 									
 								
 						
 					</table>
-					{/* {
-										!isLoading && vente.length > 0 ? (
-											<PaginationPage
-												currentPage={currentPage}
-												totalPage={totalPage}
-												isLoading={isLoading}
-												onPageChange={ async (page) => {
-													await HTTP_CLIENT.get(`/vente?page=${page?.selected ?? 0 + 1}`)  }
-													
-												}
-											
-
-											/>
-										): null
-									} */}
+					
 				</div>
 			</div>
 		</>

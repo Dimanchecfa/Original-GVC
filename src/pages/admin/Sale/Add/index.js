@@ -1,14 +1,24 @@
-import { Alert, Snackbar } from "@mui/material";
+
 import React, { useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { handlingErrors, HTTP_CLIENT } from "../../../../api/client";
-import { successNotif } from "../../../../components/alert";
+
 
 import { BackButton } from "../../../../components/button";
 import { alertClosed, alertPending } from "../../../../components/notification";
+import { notification } from 'antd';
+import { TreeSelect } from 'antd';
+import { openNotificationWithIcon } from '../../../../components/alert/index';
+import { useNavigate } from 'react-router-dom';
+
+const { TreeNode } = TreeSelect;
+
+
+
 
 const AddSale = () => {
+  const [result, setResult] = React.useState([]);
   const [moto, setMoto] = React.useState([]);
   const [marques, setMarques] = React.useState([]);
   const [modeles, setModeles] = React.useState([]);
@@ -50,9 +60,9 @@ const AddSale = () => {
   };
 
   const [numero_serie, setNumero_serie] = React.useState("");
-  const [marque, setMarque] = React.useState("");
-  const [modele, setModele] = React.useState("");
-  const [couleur, setCouleur] = React.useState("");
+  const [marque, setMarque] = React.useState(result.marque || "");
+  const [modele, setModele] = React.useState( result?.modele || "");
+  const [couleur, setCouleur] = React.useState(result?.couleur || "");
   const [prix_vente, setPrix_vente] = React.useState("");
   const [pseudo_commerciale, setPseudo_commerciale] = React.useState("");
   const [nom_client, setNom_client] = React.useState("");
@@ -62,30 +72,21 @@ const AddSale = () => {
   const [montant_verse, setMontant_verse] = React.useState("");
   const [montant_restant, setMontant_restant] = React.useState("");
   const [date_versement, setDate_versement] = React.useState("");
-  const [open, setOpen] = React.useState(false);
 
-  const handleClick = () => {
-    setOpen(true);
-  };
 
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setOpen(false);
-  };
+  
 
   React.useEffect(() => {
     (async () => fetchMarque())();
     (async () => fetchCommerciale())();
     (async () => fetchModele(marque))();
+    (async () => fetchMotoByNumeroSerie(numero_serie))();
     (async () => fetchMoto())();
    
-    (async () => handleClick())();
-  }, [marque]);
+  
+  }, [marque , numero_serie]);
   const fetchMoto = async () => {
-    await HTTP_CLIENT.get("http://localhost:8000/api/moto/number/stocker")
+    await HTTP_CLIENT.get("/moto/number/stocker")
       .then((response) => {
         const data = response?.data?.data;
         setMoto(data);
@@ -95,54 +96,73 @@ const AddSale = () => {
         console.log(error);
       });
   };
+ 
+
+const fetchMotoByNumeroSerie = async (numero_serie) => {
+    await HTTP_CLIENT.get(`/moto/${numero_serie}`)
+      .then((response) => {
+        const data = response?.data?.data;
+        setResult(data);
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
 
+
+const navigate = useNavigate();
   const handleSubmit = async (e) => {
+   
     e.preventDefault();
-   alertPending();
-
-    const data = {
-      nom_client,
-      numero_client,
-      adresse_client,
-      identifiant_client,
-      numero_serie,
-      pseudo_commerciale,
-      marque,
-      modele,
-      couleur,
-      prix_vente,
-      montant_verse,
-      montant_restant,
-      statut: montant_restant > 0 ? "en_cours" : "payé",
-      date_versement,
-    };
+  
+if(numero_serie === "" || pseudo_commerciale === "" || nom_client === "" || numero_client === "" || adresse_client === "" || identifiant_client === "" || montant_verse === "" || montant_restant === "" || date_versement === "" || prix_vente === "" || couleur === "" || modele === "" || marque === "" ){
+ return openNotificationWithIcon('error', 'Erreur', 'Veuillez remplir tous les champs');
+}
+const data = {
+  nom_client,
+  numero_client,
+  adresse_client,
+  identifiant_client,
+  numero_serie,
+  pseudo_commerciale,
+  marque : result?.marque,
+  modele : result?.modele,
+  couleur : result?.couleur,
+  prix_vente,
+  montant_verse,
+  montant_restant,
+  statut: montant_restant > 0 ? "en_cours" : "payé",
+  date_versement,
+};
     console.log(data);
 
     HTTP_CLIENT.post("vente", data)
       .then((res) => {
+        alertPending();
         console.log(res);
-        
+        navigate('/dashboard');
         setTimeout(() => {
           alertClosed();
+          openNotificationWithIcon('success' , 'Vente ajoutée avec succès');
         }, 500);
       })
       .catch((err) => {
         console.log(err);
-        setTimeout(() => {
-          alertClosed();
-        }, 500);
+        openNotificationWithIcon('error' , 'Erreur lors de l\'ajout de la vente');
+
       });
   };
+  const onChange= (newValue) => {
+    setNumero_serie(newValue);
+    console.log(newValue);
+  }
 
   return (
     <>
       <BackButton />
-      <Snackbar open={open} autoHideDuration={2000} onClose={handleClose}>
-        <Alert variant="filled" onClose={handleClose} severity="error">
-          This is an error alert — check it out!
-        </Alert>
-      </Snackbar>
+      
       <div className="row">
         <div class="col-12 offset-1 col-lg-4 ">
           <div class="card">
@@ -150,50 +170,66 @@ const AddSale = () => {
               <h3 class="mb-0"> Vente d une moto </h3>
             </div>
             <div class="card-body">
-              <label class="form-label">Numero de serie</label>
-              <input
-                type="text"
-                class="form-control"
-                placeholder="N de serie"
-                value={numero_serie}
-                onChange={(e) => setNumero_serie(e.target.value)}
-              />
+            <label class="form-label">Numero de serie</label>
+            <TreeSelect
+      showSearch
+      style={{
+        width: '100%',
+      }}
+      value={numero_serie}
+      label = "Numero de serie"
+      dropdownStyle={{
+        maxHeight: 400,
+        overflow: 'auto',
+      }}
+      placeholder="Please select"
+      allowClear
+      treeDefaultExpandAll
+      onChange={onChange}
+    >
+      {moto.map((moto) => (
+        <TreeNode value={moto.numero_serie} title={moto.numero_serie} />
+      ))}
+
+    </TreeSelect>
+              
+              
             </div>
 
             <div class="card-body">
               <label class="form-label">Marque</label>
-              <select
-                class="form-select mb-3"
-                value={marque}
-                onChange={(e) => setMarque(e.target.value)}
-              >
-                <option selected="">choisissez le model</option>
-                {marques.map((item) => (
-                  <option value={item.nom}>{item.nom}</option>
-                ))}
-              </select>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter la marque"
+                value={result?.marque}
+                
+              />
+            </div>
+            <div class="card-body">
               <label class="form-label">Model</label>
-              <select
-                class="form-select mb-3"
-                value={modele}
-                onChange={(e) => setModele(e.target.value)}
-              >
-                <option selected="">choisissez le model</option>
-                {modeles.map((item) => (
-                  <option value={item?.nom}>{item.nom}</option>
-                ))}
-              </select>
+             
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter le model"
+                value={result?.modele}
+                
+              />
+            </div>  
+            <div class="card-body">
               <label class="form-label">Couleur</label>
-              <select
-                class="form-select mb-3"
-                value={couleur}
-                onChange={(e) => setCouleur(e.target.value)}
-              >
-                <option selected="">choisissez la couleur</option>
-                <option>Yamaha</option>
-                <option>Adora</option>
-                <option>Kaiser</option>
-              </select>
+             
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter la couleur"
+                value={result?.couleur}
+                
+              />
+            </div>  
+
+            <div class="card-body">
               <label class="form-label">Commerciale</label>
               <select
                 class="form-select mb-3"
@@ -205,11 +241,13 @@ const AddSale = () => {
                   <option value={item?.pseudo}>{item?.pseudo}</option>
                 ))}
               </select>
+           
+            
               <label class="form-label">Prix</label>
               <input
                 type="text"
                 class="form-control"
-                placeholder="N de serie"
+                placeholder="Enter le prix"
                 value={prix_vente}
                 onChange={(e) => setPrix_vente(e.target.value)}
               />
@@ -247,7 +285,7 @@ const AddSale = () => {
               <input
                 type="text"
                 class="form-control"
-                placeholder="N de serie"
+                placeholder="Adresse du client"
                 value={adresse_client}
                 onChange={(e) => setAdresse_client(e.target.value)}
               />
@@ -257,7 +295,7 @@ const AddSale = () => {
               <input
                 type="text"
                 class="form-control"
-                placeholder="N de serie"
+                placeholder="N de carte d'identité"
                 value={identifiant_client}
                 onChange={(e) => setIdentifiant_client(e.target.value)}
               />
@@ -276,7 +314,7 @@ const AddSale = () => {
               <input
                 type="text"
                 class="form-control"
-                placeholder="N de serie"
+                placeholder="Enter le montant paye"
                 value={montant_verse}
                 onChange={(e) => setMontant_verse(e.target.value)}
               />
@@ -288,7 +326,7 @@ const AddSale = () => {
                   <input
                     type="text"
                     class="form-control"
-                    placeholder="N de serie"
+                    placeholder="Enter le montant restant"
                     //mettre a jour en temps reel
                     value={prix_vente - montant_verse}
                   />

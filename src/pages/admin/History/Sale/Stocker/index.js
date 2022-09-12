@@ -1,3 +1,4 @@
+import { Empty, Spin } from "antd";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { HTTP_CLIENT } from "../../../../../api/client";
@@ -89,7 +90,7 @@ export const IsStocked = () => {
 							isLoading ? (
 								<tr>
 									<td colSpan="6" className="text-center">
-										...Veuillez patienter
+										<Spin />
 									</td>
 								</tr>
 							): null
@@ -98,7 +99,7 @@ export const IsStocked = () => {
 								!isLoading && motos.length === 0 ? (
 									<tr>
 										<td colSpan="6" className="text-center">
-											Aucune moto pour le moment
+											<Empty description="Aucune moto en stock" />
 										</td>
 									</tr>
 								): null

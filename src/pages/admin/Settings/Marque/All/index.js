@@ -4,21 +4,33 @@ import { EditIcon } from "../../../../../components/icones";
 import PageHeader from "../../../../../components/pageheader/index";
 import { useNavigate } from "react-router-dom";
 import AddMarque from "../Add/index";
+import { Pagination } from 'antd';
+import Swal from "sweetalert2";
 
 const Allmarque = () => {
   const navigate = useNavigate();
   const [marque, setMarque] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
+  const [current, setCurrent] = React.useState(0);
+  const [total, setTotal] = React.useState(0);
 
   React.useEffect(() => {
-    (async () => fetchmarque())();
-  }, []);
+    (async () => fetchMarque(current))();
+  }, [current]);
+  const onChange= (page) => {
+    console.log(page);
+    setCurrent(page);
+    console.log(current);
+  }
 
-  const fetchmarque = async () => {
-    await HTTP_CLIENT.get("http://localhost:8000/api/marque")
+  const fetchMarque = async (page) => {
+    await HTTP_CLIENT.get(`/marque/page/${page}`)
       .then((response) => {
-        setMarque(response.data?.data);
-        console.log(response.data);
+        const data = response?.data?.data;
+        setMarque(data?.data);
+        setCurrent(data?.current_page);
+        setTotal(data?.total);
+        console.log(data);
         setIsLoading(false);
       })
       .catch((error) => {
@@ -54,7 +66,42 @@ const Allmarque = () => {
                       >
                         {" "}
                         <EditIcon /> Modifier
-                      </button>
+                      </button>{" "}
+                      <button class="btn btn-danger btn-sm"
+								onClick={
+									() => {	
+                    console.log(marque.id);
+										Swal.fire({
+											title: 'Etes vous sur  de supprimer la marque ' + marque.nom + ' ?',
+											text: "Vous ne pourrez pas revenir en arrière !",
+											icon: 'warning',
+											showCancelButton: true,
+											confirmButtonColor: '#3085d6',
+											cancelButtonColor: '#d33',
+											confirmButtonText: 'Oui, supprimer !'
+										  }).then((result) => {
+											if (result.isConfirmed) {
+												HTTP_CLIENT.delete(`http://localhost:8000/api/marque/${marque.id}`)
+												.then((response) => {
+													console.log(response.data);
+                          fetchMarque(current);
+													
+												})
+												.catch((error) => {
+													console.log(error);
+												});
+												
+												
+											  Swal.fire(
+												'Supprimé!',
+												'Votre fichier a été supprimé.',
+												'success'
+											  )
+											}
+										  })
+										}
+								}
+								> <EditIcon/>{" "}Supprimer</button>
                     </td>
                   </tr>
                 ))}
@@ -73,6 +120,13 @@ const Allmarque = () => {
                   </tr>
                 ) : null}
               </tbody>
+                    <tr className="text-center">
+                      <td colSpan="6">
+                        <Pagination current={current} total={total} onChange={onChange} />
+                      </td>
+                    </tr>
+
+
             </table>
           </div>
         </div>

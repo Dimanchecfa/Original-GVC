@@ -2,6 +2,7 @@ import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { HTTP_CLIENT } from "../../../../api/client";
 import Swal from "sweetalert2";
+import { openNotificationWithIcon } from "../../../../components/alert";
 
 const EditMoto = () => {
     const navigate = useNavigate();
@@ -49,19 +50,15 @@ const EditMoto = () => {
         .then((res) => {
             console.log(res);
             
-                navigate("/show_stock");
-                Swal.fire({
-                    position: 'top-end',
-                    icon: 'success',
-                    title: 'Moto modifié avec succès',
-                    showConfirmButton: false,
-                    timer: 1500
-                    })
+                navigate("/all_stock" , { replace: true });
+               
+               
+                openNotificationWithIcon("success", "Modification effectuée avec succès");
            
                 setNumero_serie("");
                 setMarque("");
                 setModele("");
-                setCouleur("")
+                setCouleur("");
         })
        
         

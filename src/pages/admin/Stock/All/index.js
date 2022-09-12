@@ -1,29 +1,46 @@
 
 import { useEffect, useState } from "react";
+import { Empty, Pagination, Spin } from 'antd';
 import { useNavigate } from "react-router-dom";
 import { HTTP_CLIENT } from "../../../../api/client";
 import { EditIcon, EyeIcon } from "../../../../components/icones";
 import PageHeader from "../../../../components/pageheader";
 
+
+const onShowSizeChange = (current, pageSize) => {
+	console.log(current, pageSize);
+  };
 const AllStock = () => {
 	const navigate = useNavigate();
 	const [isLoading, setIsLoading] = useState(true);
 	const [stock, setStock] = useState([]);
+	const [current, setCurrent] = useState(0);
+	const [total, setTotal] = useState(0);
 
 	useEffect(() => {
-		(async () => fetchStock())();
-	}, []);
+		(async () => fetchStock(current))();
+	}, [current]);
+	const onChange = (page) => {
+		console.log(page);
+		setCurrent(page);
+	  };
 
-	const fetchStock = async () => {
-		await HTTP_CLIENT.get("http://localhost:8000/api/stock")
+	const fetchStock = async (page) => {
+		//paginate
+		await HTTP_CLIENT.get(`/stock/page/${page}`)
 			.then((response) => {
-				const { data } = response.data;
-				setStock(data);
-				console.log(stock);
+				const  data  = response.data?.data;
+				setStock(data?.data);
+				console.log(data);
+				setCurrent(data?.current_page);
+				setTotal(data?.total);
 				
 				setIsLoading(false);
 			})
 			.catch((error) => {
+				setTimeout(() => {
+					setIsLoading(false);
+				}, 1000);
 				console.log(error);
 			});
 	};
@@ -83,7 +100,7 @@ const AllStock = () => {
 							isLoading ? (
 								<tr>
 									<td colSpan="6" className="text-center">
-										...Veuillez patienter
+										<Spin />
 									</td>
 								</tr>
 							): null
@@ -92,7 +109,7 @@ const AllStock = () => {
 								!isLoading && stock.length === 0 ? (
 									<tr>
 										<td colSpan="6" className="text-center">
-											Aucune stock pour le moment
+											<Empty description="Aucun stock disponible" />
 										</td>
 									</tr>
 								): null
@@ -101,6 +118,19 @@ const AllStock = () => {
 							
 							
 						</tbody>
+						 {
+								!isLoading && stock.length > 0 && (
+									<tr class="offset-2 text-center">
+						<td colSpan="6">
+						<Pagination current={current} onChange={onChange} total={
+							total
+						}
+						
+						/>
+						</td>
+						</tr>
+								)
+						 }
 						
 							
 									

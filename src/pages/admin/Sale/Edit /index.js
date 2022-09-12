@@ -1,9 +1,12 @@
 import React, { useEffect } from 'react'
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { HTTP_CLIENT } from '../../../../api/client';
+import { openNotificationWithIcon } from '../../../../components/alert';
 import { BackButton } from '../../../../components/button';
+import { alertClosed, alertPending } from '../../../../components/notification/index';
 
 const EditSale = () => {
+  const navigate = useNavigate();
   const {state} = useLocation();
   useEffect(() => {
     console.log(state);
@@ -45,7 +48,13 @@ const [date_versement, setDate_versement] = React.useState(state?.date_versement
 
     HTTP_CLIENT.put(`/vente/${state.id}`, data)
       .then((res) => {
+        alertPending();
         console.log(res);
+        navigate("/all_sale" , { replace: true });
+        setTimeout(() => {
+          alertClosed();
+          openNotificationWithIcon("success", "Modification effectuée avec succès");
+        }, 1000);
       })
       .catch((err) => {
         console.log(err);

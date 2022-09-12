@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { HTTP_CLIENT } from '../../../../../api/client'
+import { openNotificationWithIcon } from '../../../../../components/alert'
 import { BackButton } from '../../../../../components/button'
 import PageHeader from '../../../../../components/pageheader'
 
 const EditCommerciale = () => {
+    const navigate = useNavigate();
     const location = useLocation();
     const { state } = location;
     const [pseudo, setPseudo] = React.useState(state?.pseudo);
@@ -28,6 +30,10 @@ const EditCommerciale = () => {
         HTTP_CLIENT.put(`/commerciale/${state.id}`, data)
         .then((res) => {
             console.log(res);
+            navigate("/all_commerciale");
+            openNotificationWithIcon("success", "Modification effectué avec succès");
+
+
         }
         )
         .catch((err) => {
