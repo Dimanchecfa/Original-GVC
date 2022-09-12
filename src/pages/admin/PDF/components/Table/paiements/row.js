@@ -21,46 +21,49 @@ const styles = StyleSheet.create({
    
   },
   name: {
-    width: '30%',
+    width: '35%',
     textAlign: 'center',
     ...thDefaultProps,
   },
   function: {
-    width: '20%',
+    width: '25%',
     ...thDefaultProps,
     textAlign: 'center',
   },
   hours: {
-    width: '15%',
+    width: '20%',
     ...thDefaultProps,
     textAlign: 'center',
   },
   value: {
-    width: '15%',
+    width: '20%',
     ...thDefaultProps,
     textAlign: 'center',
   },
-  total: {
-    width: '20%',
-    ...thDefaultProps,
-  },
+ 
 });
 
 export const Row = (
     {
-        numero_serie ,
-        marque ,
-        modele ,
-        couleur ,
-        prix ,
+        montant_paye ,
+        montant_restant ,
+        date__versement ,
+        total ,
     }
-
 ) => (
   <View style={styles.container}>
-    <Text style={styles.name}>Nilton</Text>
-    <Text style={styles.function}>Frontend Developer</Text>
-    <Text style={styles.hours}>168:00</Text>
-    <Text style={styles.value}>60</Text>
-    <Text style={styles.total}>10.000,80</Text>
+    <Text style={styles.name}>
+        {montant_paye}
+    </Text>
+    <Text style={styles.function}>
+        {montant_restant}
+    </Text>
+    <Text style={styles.hours}>
+        {date__versement}
+    </Text>
+    <Text style={styles.value}>
+        {total}
+    </Text>
+   
   </View>
 );

@@ -1,5 +1,6 @@
 import { View, StyleSheet, Text, Image } from '@react-pdf/renderer';
 import { Table } from '../components/Table';
+import { Tables } from '../components/Table/paiements';
 
 const styles = StyleSheet.create({
   header: {
@@ -142,7 +143,7 @@ export const InvoiceInfo = () => (
     <View style={styles.Moto} >
       <Text style={styles.headerMoto}>Paiements</Text>
     </View>
-    <Table />
+    <Tables />
   </View>
   <View style={styles.header}>
     <View>

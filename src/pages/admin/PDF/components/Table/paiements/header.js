@@ -20,36 +20,36 @@ const styles = StyleSheet.create({
   
   },
   name: {
-    width: '30%',
+    width: '35%',
     paddingLeft: '10px',
     textAlign: 'center',
     ...thDefaultProps,
   },
   function: {
-    width: '20%',
+    width: '25%',
     ...thDefaultProps,
     textAlign: 'center',
    
   },
   hours: {
-    width: '15%',
+    width: '20%',
     ...thDefaultProps,
     textAlign : 'center'
   },
   value: {
-    width: '15%',
+    width: '20%',
     ...thDefaultProps,
     textAlign : 'center' 
   },
-  total: {
-    width: '20%',
-    paddingRight: '10px',
-    ...thDefaultProps,
-    textAlign : 'center',
-  },
+ 
 });
 
-export const Header = () => (
+export const Header = ( { 
+    montant_paye ,
+    montant_restant ,
+    date__versement ,
+    
+}) => (
   <View style={styles.container} fixed>
     <Text style={styles.name}>Montant Paye</Text>
     <Text style={styles.function}>Montant restant</Text>
