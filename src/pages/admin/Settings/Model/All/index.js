@@ -44,7 +44,7 @@ const Allmodele = () => {
               <thead>
                 <tr>
                   <th class="text-center">Nom </th>
-                    <th class="text-center">Nom de la modele</th>
+                    <th class="text-center">Nom du modele</th>
                   <th class="text-center">Action </th>
                 </tr>
               </thead>

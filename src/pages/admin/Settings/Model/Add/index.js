@@ -73,7 +73,7 @@ const AddModele = () => {
           <div className="col-5 offset-3 col-xxl-5 d-flex">
             <div class="card">
               <div class="card-header">
-                <h5 class="card-title mb-0">Ajout d'une Marque</h5>
+                <h5 class="card-title mb-0">Ajout d'un model</h5>
               </div>
               <div class="card-body">
               <label class="form-label">Marque</label>
