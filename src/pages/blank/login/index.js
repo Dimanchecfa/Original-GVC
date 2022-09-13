@@ -1,6 +1,38 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { React } from 'react';
+import { useState } from "react";
+import { alertClosed, alertPending } from "../../../components/notification";
+import { openNotificationWithIcon } from "../../../components/alert";
 
 const Login = () => {
+    const navigate = useNavigate();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const user = {
+        email : "naboure@gmail.com",
+        password : "123456"
+    }
+    const handleLogin = (e) => {
+        alertPending();
+        e.preventDefault();
+        if(email === user.email && password === user.password){
+            navigate("/dashboard");
+            setTimeout(() => {
+                alertClosed();
+                openNotificationWithIcon("success", "Connexion réussie", "Vous êtes connecté");
+            }, 500);
+
+        }else{
+            console.log("not ok");
+            setTimeout(() => {
+                alertClosed();
+                openNotificationWithIcon("error", "Connexion échouée", "Veuillez vérifier vos informations");
+            }
+            , 500);
+        }
+    }
+
     return (
         <>
             <main class="d-flex w-100">
@@ -10,9 +42,9 @@ const Login = () => {
                             <div class="d-table-cell align-middle">
 
                                 <div class="text-center mt-4">
-                                    <h1 class="h2">Welcome back, Charles</h1>
+                                    <h1 class="h2">Bienvenue</h1>
                                     <p class="lead">
-                                        Sign in to your account to continue
+                                        Connectez-vous à votre compte pour continuer.
                                     </p>
                                 </div>
 
@@ -31,26 +63,28 @@ const Login = () => {
                                             <form>
                                                 <div class="mb-3">
                                                     <label class="form-label">Email</label>
-                                                    <input class="form-control form-control-lg" type="email" name="email" placeholder="Enter your email" />
+                                                    <input class="form-control form-control-lg" type="email" name="email" placeholder="Enter votre email"
+                                                        value={email}
+                                                        onChange={(e) => setEmail(e.target.value)}
+                                                    />
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label class="form-label">Password</label>
-                                                    <input class="form-control form-control-lg" type="password" name="password" placeholder="Enter your password" />
+                                                    <label class="form-label">Mot de passe</label>
+                                                    <input class="form-control form-control-lg" type="password" name="password" placeholder="Enter  votre moto de passe"
+                                                    value={password}
+                                                    onChange={(e) => setPassword(e.target.value)}
+                                                    />
                                                     <small>
                                                         <a href="index.html">Forgot password?</a>
                                                     </small>
                                                 </div>
-                                                <div>
-                                                    <label class="form-check">
-                                                        <input class="form-check-input" type="checkbox" value="remember-me" name="remember-me" checked="" />
-                                                        <span class="form-check-label">
-                                                            Remember me next time
-                                                        </span>
-                                                    </label>
-                                                </div>
+                                            
+                                               
                                                 <div class="text-center mt-5">
-
-                                                    <NavLink to={"/admin"} type="submit" class="btn btn-lg btn-primary">Sign in</NavLink>
+                                                    <button type="submit" class="btn btn-lg btn-primary"
+                                                    
+                                                    onClick={handleLogin}
+                                                    >Se connecter</button>
                                                 </div>
                                             </form>
                                         </div>
