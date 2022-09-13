@@ -10,7 +10,7 @@ const AddCommerciale = () => {
     const [pseudo , setPseudo] = React.useState("");
     const [nom, setNom] = React.useState("");
     const [numero, setNumero] = React.useState("");
- const [logo , setLogo] = React.useState("");
+ 
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -18,7 +18,7 @@ const AddCommerciale = () => {
             pseudo,
             nom,
             numero,
-            logo
+           
         };
         console.log(data);
         HTTP_CLIENT.post("/commerciale", data , )
@@ -72,13 +72,7 @@ const AddCommerciale = () => {
                 onChange={(e) => setNumero(e.target.value)}
                 />
               </div>
-              <div class="card-body">
-                <label class="form-label">Logo</label>
-                <input type="text" class="form-control" placeholder="Logo" 
-                    value={logo}
-                    onChange={(e) => setLogo(e.target.value)}
-                />
-              </div>
+              
               <div class="card-body">
                 <button type="submit" class="btn btn-primary"
               

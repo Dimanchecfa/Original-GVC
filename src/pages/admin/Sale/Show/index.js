@@ -109,7 +109,7 @@ const ShowSell = () => {
 
                         <div class="card-header">
 
-                            <h4 class="card-title mb-0">Detail de la vente de Mr { commerciale?.data?.[0].nom} le { state.created_at}</h4>
+                            <h4 class="card-title mb-0">Detail de la vente de Mr { commerciale?.data?.[0].nom} le { state?.created_at}</h4>
                         </div>
                         <table class="table table-hover my-0">
                             <thead>

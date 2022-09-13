@@ -37,3 +37,9 @@ export const SettingIcon = () => {
         <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="arcs"><circle cx="12" cy="12" r="3"></circle><path d="M19.94 5.64a9 9 0 1 1-12.73 0"></path></svg>
     )
 }
+
+export const AvatarIcon = () => {
+    return (
+        <i class="fas fa-user"></i>
+    )
+}

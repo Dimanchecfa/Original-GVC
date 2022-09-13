@@ -11,7 +11,9 @@ const PageHeader = ({ title , route}) => {
                         navigate(-1);
                     }
                 }
-                    >Retour</button>
+                    >
+                        <i class="fas fa-arrow-left"></i>
+                        </button>
                 </div>
                 <div class="col-md-3">
                 <div class="page-header">

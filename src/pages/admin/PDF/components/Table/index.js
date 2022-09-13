@@ -65,11 +65,11 @@ export const Table = (
     <Header />
   
     <View style={styles.container}>
-    <Text style={styles.name}>{numero_serie},</Text>
-    <Text style={styles.function}>{marque},</Text>
-    <Text style={styles.hours}> {modele} ,</Text>
+    <Text style={styles.name}>{numero_serie}</Text>
+    <Text style={styles.function}>{marque}</Text>
+    <Text style={styles.hours}> {modele} </Text>
     <Text style={styles.value}>{couleur} ,</Text>
-    <Text style={styles.total}>{prix} ,</Text>
+    <Text style={styles.total}>{prix}  FCFA</Text>
   </View>
    
    

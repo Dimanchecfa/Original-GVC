@@ -15,7 +15,7 @@ const AllSell = () => {
   const navigate = useNavigate();
   const [startDate, setStartDate] = useState(new Date());
   const [isLoading, setIsLoading] = React.useState(true);
-  const [current, setCurrent] = useState(0);
+  const [current, setCurrent] = useState(1);
   const [total, setTotal] = useState(0);
   const dateFormat = (date) => {
     const d = new Date(date);

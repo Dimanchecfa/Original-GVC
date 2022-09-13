@@ -122,7 +122,7 @@ return (
                                 <div class="card-body">
 
                                     <button type="button" onClick={handleSubmit}
-                                        class="btn btn-primary">Primary</button>
+                                        class="btn btn-primary">Ajouter</button>
 
                                 </div>
 
@@ -193,7 +193,7 @@ return (
                             <div class="card-body">
 
                                 <button type="button" onClick={handleAddMotor}
-                                    class="btn btn-primary">Primary</button>
+                                    class="btn btn-primary">Ajouter</button>
 
                             </div>
 

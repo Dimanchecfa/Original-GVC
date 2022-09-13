@@ -4,14 +4,14 @@ import { EditIcon } from "../../../../../components/icones";
 import PageHeader from "../../../../../components/pageheader/index";
 import { useNavigate } from "react-router-dom";
 import AddMarque from "../Add/index";
-import { Pagination } from 'antd';
+import { Empty, Pagination, Spin } from 'antd';
 import Swal from "sweetalert2";
 
 const Allmarque = () => {
   const navigate = useNavigate();
   const [marque, setMarque] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
-  const [current, setCurrent] = React.useState(0);
+  const [current, setCurrent] = React.useState(1);
   const [total, setTotal] = React.useState(0);
 
   React.useEffect(() => {
@@ -35,6 +35,10 @@ const Allmarque = () => {
       })
       .catch((error) => {
         console.log(error);
+       setTimeout(() => {
+          setIsLoading(false);
+        }
+        , 1000);
       });
   };
   return (
@@ -101,21 +105,21 @@ const Allmarque = () => {
 										  })
 										}
 								}
-								> <EditIcon/>{" "}Supprimer</button>
+								> {" "}Supprimer</button>
                     </td>
                   </tr>
                 ))}
                 {isLoading ? (
                   <tr>
                     <td colSpan="6" className="text-center">
-                      ...Veuillez patienter
+                     <Spin size="large" />
                     </td>
                   </tr>
                 ) : null}
                 {!isLoading && marque.length === 0 ? (
                   <tr>
                     <td colSpan="6" className="text-center">
-                      Aucune marque
+                     <Empty />
                     </td>
                   </tr>
                 ) : null}
