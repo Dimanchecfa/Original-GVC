@@ -11,7 +11,7 @@ const AllCommerciale = () => {
     const navigate = useNavigate();
     const [commerciale, setCommerciale] = React.useState([]);
    const [isLoading, setIsLoading] = React.useState(true);
-   const [current, setCurrent] = React.useState(0);
+   const [current, setCurrent] = React.useState(1);
    const [total, setTotal] = React.useState(0);
 
     React.useEffect(() => {

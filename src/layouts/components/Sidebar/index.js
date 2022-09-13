@@ -4,6 +4,22 @@ import { DashboardIcon, HistoryIcon, SettingIcon, StockIcon, VenteIcon } from ".
 const Sidebar = () => {
     
 const navigate = useNavigate();
+const item = document.querySelectorAll('.sidebar-item');
+
+//ajouter la class active sur le lien cliqué et supprimer la class active sur les autres liens
+item.forEach((link) => {
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
+        item.forEach((i) => i.classList.remove('active'));
+        link.classList.add('active');
+        navigate(link.getAttribute('href'));
+    });
+});
+
+
+
+
+
 
     return ( 
         <>
@@ -16,7 +32,7 @@ const navigate = useNavigate();
             <ul class="sidebar-nav">
               
 
-              <li class="sidebar-item active"  
+              <li class="sidebar-item"  
                 onClick={
                   () => {
                     navigate("/dashboard")
@@ -69,6 +85,15 @@ const navigate = useNavigate();
                 <a class="sidebar-link" >
                   <SettingIcon/>{" "}
                   <span class="align-middle">Configuration</span>
+                </a>
+              </li>
+              <li class="sidebar-item "  onClick={
+                  () => {
+                    navigate("/settings")
+                  }}>
+                <a class="sidebar-link" >
+                  <SettingIcon/>{" "}
+                  <span class="align-middle">Redevabilites</span>
                 </a>
               </li>
 

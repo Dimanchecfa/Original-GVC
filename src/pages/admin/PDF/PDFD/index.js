@@ -1,8 +1,8 @@
 import { View, StyleSheet, Text, Image } from '@react-pdf/renderer';
-import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import { Table } from '../components/Table';
 import { Tables } from '../components/Table/paiements';
+import { Table }  from "../components/Table";
+import { useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const styles = StyleSheet.create({
   header: {
@@ -85,11 +85,13 @@ const styles = StyleSheet.create({
 });
 
 export const InvoiceInfo = () => {
+ 
   const location = useLocation();
   const { state } = location;
-  useEffect(() => {
-    console.log(state);
-  }, []);
+  const { data } = state;
+ 
+  console.log(data);
+   
 
   return (
  <>
@@ -147,11 +149,11 @@ export const InvoiceInfo = () => {
       <Text style={styles.headerMoto}>Informations de la moto</Text>
     </View>
     <Table 
-    numero_serie="Numero de serie"
-    marque="Marque"
-    modele="Modele"
-    couleur="Couleur"
-    prix="Prix"
+        numero_serie="Numero de serie"
+        marque="Marque"
+        modele="Modele"
+        couleur="Couleur"
+        prix ="Prix"
     />
   </View>
   <View>
@@ -159,11 +161,13 @@ export const InvoiceInfo = () => {
       <Text style={styles.headerMoto}>Paiements</Text>
     </View>
     <Tables 
-    montant_paye="1000"
-    montant_restant="1000"
-    date__versement="2021-01-01"
-    total="3000"
-    />
+      montant_paye= "Montant paye"
+      montant_restant= "Montant restant"
+      date_versement= "Date de versement"
+    total= "Mode de paiement"
+      
+     
+      />
   </View>
   <View style={styles.header}>
     <View>

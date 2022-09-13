@@ -142,7 +142,7 @@ const data = {
       .then((res) => {
         alertPending();
         console.log(res);
-        navigate('/pdfe' , {state : data});
+        navigate('/pdfe' , {state : res?.data?.data});
         setTimeout(() => {
           alertClosed();
           openNotificationWithIcon('success' , 'Vente ajoutée avec succès');

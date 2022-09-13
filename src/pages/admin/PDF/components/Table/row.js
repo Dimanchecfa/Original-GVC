@@ -57,10 +57,10 @@ export const Row = (
 
 ) => (
   <View style={styles.container}>
-    <Text style={styles.name}>Nilton</Text>
-    <Text style={styles.function}>Frontend Developer</Text>
-    <Text style={styles.hours}>168:00</Text>
-    <Text style={styles.value}>60</Text>
-    <Text style={styles.total}>10.000,80</Text>
+    <Text style={styles.name}>{numero_serie},</Text>
+    <Text style={styles.function}>{marque},</Text>
+    <Text style={styles.hours}> {modele} ,</Text>
+    <Text style={styles.value}>{couleur} ,</Text>
+    <Text style={styles.total}>{prix} ,</Text>
   </View>
 );

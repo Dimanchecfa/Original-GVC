@@ -44,12 +44,7 @@ const styles = StyleSheet.create({
  
 });
 
-export const Header = ( { 
-    montant_paye ,
-    montant_restant ,
-    date__versement ,
-    
-}) => (
+export const Header = ( ) => (
   <View style={styles.container} fixed>
     <Text style={styles.name}>Montant Paye</Text>
     <Text style={styles.function}>Montant restant</Text>
