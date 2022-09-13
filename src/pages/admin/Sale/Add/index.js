@@ -132,8 +132,8 @@ const data = {
   couleur : result?.couleur,
   prix_vente,
   montant_verse,
-  montant_restant,
-  statut: montant_restant > 0 ? "en_cours" : "payé",
+  montant_restant : parseInt(prix_vente) - parseInt(montant_verse),
+  statut: parseInt(montant_restant) === 0 ? "payé" : "en_cours",
   date_versement,
 };
     console.log(data);
@@ -328,7 +328,9 @@ const data = {
                     class="form-control"
                     placeholder="Enter le montant restant"
                     //mettre a jour en temps reel
-                    value={prix_vente - montant_verse}
+                    value={
+                      parseInt(prix_vente) - parseInt(montant_verse)
+                    }
                   />
                 </div>
                 <div class="card-body">

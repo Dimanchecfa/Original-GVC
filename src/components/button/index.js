@@ -7,7 +7,9 @@ export const BackButton = () => {
         <div class="col-4 offset-1 mb-5">
             <button class="btn btn-danger" onClick={()=> {
                 navigate(-1);
-            }}>Retour</button>
+            }}>
+                <i class="fas fa-arrow-left"></i>
+              </button>
         </div>
         </div>
     );

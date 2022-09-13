@@ -11,7 +11,7 @@ const Login = () => {
 
     const user = {
         email : "naboure@gmail.com",
-        password : "123456"
+        password : "123456",
     }
     const handleLogin = (e) => {
         alertPending();

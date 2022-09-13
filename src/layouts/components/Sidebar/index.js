@@ -89,10 +89,11 @@ item.forEach((link) => {
               </li>
               <li class="sidebar-item "  onClick={
                   () => {
-                    navigate("/settings")
+                    navigate("/redevability")
                   }}>
                 <a class="sidebar-link" >
-                  <SettingIcon/>{" "}
+                  <i class="fas  fa-shop"></i>{" "}
+                  {" "}
                   <span class="align-middle">Redevabilites</span>
                 </a>
               </li>

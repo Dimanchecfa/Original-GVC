@@ -86,17 +86,17 @@ const AllHistory = () => {
           <Card
             title="Nombre de moto ecoule pour le mois dernier "
             svg={<i class="fas fa-2x fa-car"></i>}
-            route="/admin/stock/vente"
+            route="/dashboard"
             state="vente"
-            data={moto}
-            button="Détails"
+            data="0"
+           
           />
           <Card
             title="Somme encaisse pour le mois dernier"
             svg={<i class="fas fa-2x fa-usd"></i>}
             route="/admin/stock/vente"
-            data={price}
-            button="Details"
+            data="0"
+           
             unite="FCFA"
           />
         </div>

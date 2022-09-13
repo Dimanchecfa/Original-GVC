@@ -86,11 +86,7 @@ const styles = StyleSheet.create({
 
 export const InvoiceInfo = () => {
  
-  const location = useLocation();
-  const { state } = location;
-  const { data } = state;
  
-  console.log(data);
    
 
   return (

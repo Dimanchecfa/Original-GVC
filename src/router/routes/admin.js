@@ -24,6 +24,7 @@ import NoStocked from "../../pages/admin/History/Sale/NoStock";
 import EditMoto from "../../pages/admin/Stock/Edit";
 import PDF from "../../pages/admin/PDF/Sale";
 import { InvoicePDF } from "../../pages/admin/PDF";
+import { Redevability } from "../../pages/admin/Redevability";
 
 
 
@@ -57,6 +58,7 @@ const AdminRoutes = () => {
                 <Route path="/edit_moto" element={<EditMoto />} />
                 <Route path="*" element={<h1>page non touve</h1>} />
                <Route path="/pdfe" element={ <InvoicePDF />} />
+               <Route path="/redevability"  element={<Redevability/>} />
                 
 
 
