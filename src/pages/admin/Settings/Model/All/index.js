@@ -3,7 +3,7 @@ import { HTTP_CLIENT } from "../../../../../api/client";
 import { EditIcon } from "../../../../../components/icones";
 import PageHeader from "../../../../../components/pageheader/index";
 import { useNavigate } from "react-router-dom";
-import { Pagination } from 'antd';
+import { Empty, Pagination, Spin } from 'antd';
 import Swal from "sweetalert2";
 
 
@@ -11,7 +11,7 @@ const Allmodele = () => {
   const navigate = useNavigate();
   const [modele, setmodele] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
-  const [current, setCurrent] = React.useState(0);
+  const [current, setCurrent] = React.useState(1);
   const [total, setTotal] = React.useState(1);
 
   React.useEffect(() => {
@@ -97,21 +97,21 @@ const Allmodele = () => {
 										  })
 										}
 								}
-								> <EditIcon/>{" "}Supprimer</button>
+								> {" "}Supprimer</button>
                     </td>
                   </tr>
                 ))}
                 {isLoading ? (
                   <tr>
                     <td colSpan="6" className="text-center">
-                      ...Veuillez patienter
+                     <Spin />
                     </td>
                   </tr>
                 ) : null}
                 {!isLoading && modele.length === 0 ? (
                   <tr>
                     <td colSpan="6" className="text-center">
-                      Aucune modele
+                     <Empty />
                     </td>
                   </tr>
                 ) : null}

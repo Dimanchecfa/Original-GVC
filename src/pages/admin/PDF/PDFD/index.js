@@ -2,13 +2,15 @@ import { View, StyleSheet, Text, Image } from '@react-pdf/renderer';
 import { Tables } from '../components/Table/paiements';
 import { Table }  from "../components/Table";
 import { useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { HTTP_CLIENT } from '../../../../api/client';
+import { alertClosed } from '../../../../components/notification';
 
 const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    margin: '30px',
+    margin: '25px',
     
   },
   headerTitle: {
@@ -65,7 +67,7 @@ const styles = StyleSheet.create({
     fontWeight: 700,
     fontSize: '15px',
     color: '#00072B',   
-    marginBottom: '20px',
+    marginBottom: '18px',
     textDecoration: 'underline',
   },
   footerTitle : {
@@ -79,12 +81,34 @@ const styles = StyleSheet.create({
     fontWeight: 700,
     fontSize: '13px',
     color: '#00072B',
-    paddingTop : '155px' ,
+    paddingTop : '150px' ,
    
   },
 });
 
 export const InvoiceInfo = () => {
+  useEffect(() => {
+    (async () => fetchLastVente())();
+  }, []);
+
+  const [lastVente , setLastVente] = useState([]);
+  const fetchLastVente = async () => {
+    await HTTP_CLIENT.get("/last_vente")
+    .then((response) => {
+        const data = response?.data?.data;
+        setLastVente(data);
+        console.log(data);
+        setTimeout(() => {
+            alertClosed();
+        }, 500);
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+  }
+
+
+
  
  
    
@@ -100,17 +124,25 @@ export const InvoiceInfo = () => {
       </Text>
       <View style={styles.address}>
         <Text>
-          Nom de l'entreprise : <Text style={{ fontWeight: 700 }}>Nom de l'entreprise</Text>
+          Nom de l'entreprise : <Text style={{ fontWeight: 700 }}>{
+            lastVente?.pseudo_commerciale
+          }</Text>
 
         </Text>
         <Text>
-          Adresse : <Text style={{ fontWeight: 700 }}>Adresse</Text>
+          Adresse : <Text style={{ fontWeight: 700 }}>
+            Goughin , Avenue kwame Nkrumah
+          </Text>
         </Text>
         <Text>
-          Ville : <Text style={{ fontWeight: 700 }}>Ville</Text>
+          Ville : <Text style={{ fontWeight: 700 }}>
+            Ouagadougou
+          </Text>
         </Text>
         <Text>
-          Contact : <Text style={{ fontWeight: 700 }}>Numero de telephone</Text>
+          Contact : <Text style={{ fontWeight: 700 }}>
+            70 00 00 00
+          </Text>
         </Text>
       </View>
      
@@ -121,21 +153,29 @@ export const InvoiceInfo = () => {
       <Text style={styles.headerTitle}>Informations du client</Text>
       <View style={styles.address}>
         <Text>
-          Nom du client : <Text style={{ fontWeight: 700 }}>John Doe</Text>
+          Nom du client : <Text style={{ fontWeight: 700 }}>
+            {lastVente?.nom_client}
+          </Text>
         </Text>
         <Text>
-          Numero de telephone : <Text style={{ fontWeight: 700 }}>+55 51 99999-9999</Text>
+          Numero de telephone : <Text style={{ fontWeight: 700 }}>
+            {lastVente?.numero_client}
+          </Text>
         </Text>
         <Text>
-          Adresse : <Text style={{ fontWeight: 700 }}>Rua ABC, 123</Text>
+          Adresse : <Text style={{ fontWeight: 700 }}>
+            {lastVente?.adresse_client}
+          </Text>
         </Text>
         <Text>
-          Numero d 'idendite : <Text style={{ fontWeight: 700 }}>000.000.000-00</Text>
+          Numero d 'idendite : <Text style={{ fontWeight: 700 }}>
+            {lastVente?.identifiant_client}
+          </Text>
         </Text>
       </View>
       <View>
       <Text style={styles.addres}>
-          FACRURE-001
+          {lastVente?.numero_facture}
         </Text>
       </View>
     </View>
@@ -145,11 +185,11 @@ export const InvoiceInfo = () => {
       <Text style={styles.headerMoto}>Informations de la moto</Text>
     </View>
     <Table 
-        numero_serie="Numero de serie"
-        marque="Marque"
-        modele="Modele"
-        couleur="Couleur"
-        prix ="Prix"
+        numero_serie={lastVente?.numero_serie}
+        marque={lastVente?.marque}
+        modele={lastVente?.modele}
+        couleur={lastVente?.couleur}
+        prix = {lastVente?.prix_vente}
     />
   </View>
   <View>
@@ -157,10 +197,10 @@ export const InvoiceInfo = () => {
       <Text style={styles.headerMoto}>Paiements</Text>
     </View>
     <Tables 
-      montant_paye= "Montant paye"
-      montant_restant= "Montant restant"
-      date_versement= "Date de versement"
-    total= "Mode de paiement"
+      montant_paye= {lastVente?.montant_verse}
+      montant_restant= {lastVente?.montant_restant ?? 0}
+      date_versement= {lastVente?.date_versement ?? "2022-09-13"}
+    total= {lastVente?.prix_vente}
       
      
       />
@@ -170,7 +210,7 @@ export const InvoiceInfo = () => {
         
             
       <Text style={styles.DateTitle}>
-        Date: <Text style={{ fontWeight: 700 }}>Date de la facture</Text>
+        Date: <Text style={{ fontWeight: 700 }}>2022-09-13</Text>
       </Text>
       <View style={styles.addresse}>
         <Text>

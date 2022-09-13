@@ -64,16 +64,16 @@ export const Tables = (
   
     <View style={styles.container}>
     <Text style={styles.name}>
-        {montant_paye}
+        {montant_paye} FCFA
     </Text>
     <Text style={styles.function}>
-        {montant_restant}
+        {montant_restant} FCFA
     </Text>
     <Text style={styles.hours}>
         {date_versement}
     </Text>
     <Text style={styles.value}>
-        {total}
+        {total} FCFA
     </Text>
    
   </View>
